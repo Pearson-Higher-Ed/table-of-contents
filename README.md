@@ -1,4 +1,4 @@
-# TableOfContents
+# Table-of-Contents
 ## Summary
 
 This component displays a tree list with any depth.

@@ -1,0 +1,8 @@
+.DS_Store
+.idea
+build/*.js
+node_modules
+fonts
+demo/elements.css
+npm-debug.log
+*.iml
