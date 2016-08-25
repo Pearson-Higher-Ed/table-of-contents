@@ -57,12 +57,12 @@ function init() {
   document.body.dispatchEvent(new CustomEvent('o.InitMyComponent', {
     detail: {
       elementId: 'demo-target1',
-      depth: 2,
+      depth: 5,
       content: sampleList,
       childField: 'children',
-      cbk: clickHandler
-      //showDuplicateTitle:false,
-      //separateToggleIcon: false
+      cbk: clickHandler,
+      showDuplicateTitle:false,
+      separateToggleIcon: true
     }
   }));
 }

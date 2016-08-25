@@ -36,8 +36,8 @@ export class TreeNode extends React.Component {
 
   getClassName() {
     const clsStr = 'content';
-    const expandedClsStr = clsStr + ' pe-icon--chevron-up';
-    const collapsedClsStr = clsStr + ' pe-icon--chevron-down';
+    const expandedClsStr = clsStr + ' expanded';
+    const collapsedClsStr = clsStr + ' collapsed';
     return ((this.isToggleAble()) ? (this.state.expanded ? expandedClsStr : collapsedClsStr) : clsStr);
   }
 
@@ -67,7 +67,7 @@ export class TreeNode extends React.Component {
     const data = this.props.data;
     const depth = data.depth;
     const currentDepth = this.props.currentDepth;
-    const classStr = this.props.separateToggleIcon ? 'content' : this.getClassName();
+    const classStr = this.props.data.separateToggleIcon ? 'content' : this.getClassName();
     const doToggle = this.isToggleAble();
 
     if (depth > currentDepth) {
@@ -102,11 +102,11 @@ export class TreeNode extends React.Component {
           className= {classStr}
           role= "button"
           aria-controls= {this.props.node.id}
-          aria-expanded= {this.state.expanded}
-          onClick= {((doToggle && !this.props.separateToggleIcon)  ? this.toggle.bind(this) : this.handleLinkClick.bind(this, this.props.node.href))}>
+          aria-expanded= {(doToggle ? (this.state.expanded ? true : false) : '')}
+          onClick= {((doToggle && !this.props.data.separateToggleIcon)  ? this.toggle.bind(this) : this.handleLinkClick.bind(this, this.props.node.href))}>
           <span className= "title">{this.props.node.title}</span>
         </a>
-        {(this.props.separateToggleIcon ? this.renderClickIcon(currentDepth, depth) : '')}
+        {(this.props.data.separateToggleIcon ? this.renderClickIcon(currentDepth, depth) : '')}
         {(() => {
           if (nodes.length) {
             return(<ul id={this.props.node.id} className={'child-list-group '+(this.state.expanded ? 'show' : 'hide')} aria-hidden={!this.state.expanded}>
