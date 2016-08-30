@@ -33,4 +33,4 @@ export default class MyComponent {
 
 }
 
-document.body.addEventListener('o.InitMyComponent', e => new MyComponent(e.detail));
+document.body.addEventListener('o.InitToc', e => new MyComponent(e.detail));
