@@ -23,8 +23,8 @@ export class TreeNode extends React.Component {
     this.setState({expanded : !this.state.expanded});
   }
 
-  handleLinkClick(refStr) {
-    this.props.data.cbk(refStr);
+  handleLinkClick(pageId) {
+    window.pubsub.publish('GO_TO_PAGE', pageId);
   }
 
   isToggleAble() {
@@ -103,7 +103,7 @@ export class TreeNode extends React.Component {
           role= "button"
           aria-controls= {this.props.node.id}
           aria-expanded= {(doToggle ? (this.state.expanded ? true : false) : '')}
-          onClick= {((doToggle && !this.props.data.separateToggleIcon)  ? this.toggle.bind(this) : this.handleLinkClick.bind(this, this.props.node.href))}>
+          onClick= {((doToggle && !this.props.data.separateToggleIcon)  ? this.toggle.bind(this) : this.handleLinkClick.bind(this, this.props.node.id))}>
           <span className= "title">{this.props.node.title}</span>
         </a>
         {(this.props.data.separateToggleIcon ? this.renderClickIcon(currentDepth, depth) : '')}

@@ -2,7 +2,7 @@
 //
 // Change "component-name" in this file to your real component name!
 // DO NOT CHANGE "[name]", which denotes the entry property names that webpack automatically inserts for you!
-
+const webpack = require("webpack");
 module.exports = {
   entry: {
    dev: ['webpack/hot/dev-server', './main.js', './demo/demo.js'],
@@ -29,7 +29,16 @@ module.exports = {
         commonjs: 'react-dom',
         amd: 'react-dom'
       }
+    },
+    {
+        pubsub:'PubSub'
     }
+
+  ],
+  plugins: [
+    new webpack.ProvidePlugin({
+      "window.pubsub": "pubsub"
+    })
   ],
   //contentBase: './demo', // for webpack dev server
   module: {
