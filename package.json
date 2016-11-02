@@ -1,11 +1,11 @@
 {
-  "name": "",
-  "version": "0.0.0",
-  "description": "",
+  "name": "@pearson-incubator/toc",
+  "version": "0.1.0",
+  "description": "TOC Component to render the table of contents of a book",
   "main": "./main.js",
   "scripts": {
     "dev-setup": "mkdir -p fonts && cp ./node_modules/pearson-elements/dist/fonts/* ./fonts && cp ./node_modules/pearson-elements/dist/css/elements.css ./demo",
-    "dev": "npm run dev-setup && webpack-dev-server --port 8082 --devtool source-map --hot --progress --colors",
+    "dev": "npm run dev-setup && webpack-dev-server --port 8081 --devtool source-map --hot --progress --colors",
     "pretest": "npm run lint",
     "test": "mocha --compilers js:babel-register --require babel-polyfill --require intl --require test/utils/dom.js",
     "build": "webpack -p",
@@ -16,7 +16,7 @@
     "release": "node ./npm_scripts/release.js",
     "verify": "node ./npm_scripts/verify.js"
   },
-  "author": "",
+  "author": "Dhanya Menon",
   "license": "MIT",
   "repository": {
     "type": "git",

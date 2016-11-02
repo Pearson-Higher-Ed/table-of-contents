@@ -1,7 +1,6 @@
-import React, {PropTypes} from 'react';
-import {intlShape, injectIntl, IntlProvider} from 'react-intl';
-import TreeView from './tree-view.js';
-
+import React, { PropTypes } from 'react';
+import { intlShape, injectIntl, IntlProvider } from 'react-intl';
+import TreeView from './TreeView';
 
 class TableOfContents extends React.Component {
   constructor(props) {

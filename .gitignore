@@ -6,3 +6,4 @@ fonts
 demo/elements.css
 npm-debug.log
 *.iml
+/.project

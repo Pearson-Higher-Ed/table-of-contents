@@ -9,7 +9,6 @@ import React, {PropTypes} from 'react';
 import {intlShape, injectIntl} from 'react-intl';
 import {messages} from './defaultMessages';
 
-
 export class TreeNode extends React.Component {
   constructor(props) {
     super(props);
@@ -119,7 +118,7 @@ export class TreeNode extends React.Component {
   }
 }
 
-class treeView extends React.Component {
+class TreeView extends React.Component {
   constructor(props) {
     super(props);
 
@@ -153,7 +152,7 @@ class treeView extends React.Component {
   }
 }
 
-treeView.propTypes={
+TreeView.propTypes={
   intl: intlShape.isRequired,
   locale: PropTypes.string,
   data: PropTypes.shape({
@@ -163,4 +162,4 @@ treeView.propTypes={
   })
 };
 
-export default injectIntl(treeView);
+export default injectIntl(TreeView);
