@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { intlShape, injectIntl, IntlProvider } from 'react-intl';
+
 import TreeView from './TreeView';
 
 class TableOfContents extends React.Component {
@@ -27,22 +27,22 @@ class TableOfContents extends React.Component {
             </div>
           </div>
         </div>
-        <IntlProvider locale={this.props.locale} messages={this.props.translations}>
+        
           <TreeView data={this.props.data} />
-        </IntlProvider>
+       
       </div>
     )
   }
 };
 
-TableOfContents.propTypes={
-  intl: intlShape.isRequired,
-  locale: PropTypes.string,
-  data: PropTypes.shape({
-    content: PropTypes.object.isRequired,
-    depth: PropTypes.number.isRequired,
-    childField: PropTypes.string.isRequired
-  })
-};
+// TableOfContents.propTypes={
+//   intl: intlShape.isRequired,
+//   locale: PropTypes.string,
+//   data: PropTypes.shape({
+//     content: PropTypes.object.isRequired,
+//     depth: PropTypes.number.isRequired,
+//     childField: PropTypes.string.isRequired
+//   })
+// };
 
-export default injectIntl(TableOfContents);
+export default TableOfContents;

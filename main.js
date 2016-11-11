@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import { addLocaleData, IntlProvider } from 'react-intl';
 import frLocaleData from 'react-intl/locale-data/fr';
 import frJson from './translations/fr.json';
-import TableOfContents from './src/js/TableOfContents';
+ //import TableOfContents from './src/js/TableOfContents';
+import ComponentOwner from './src/js/component-owner';
 import './main.scss';
 
 const translations = {
@@ -21,7 +22,7 @@ export default class TableOfContentsComponent {
 
     ReactDOM.render(
       <IntlProvider locale={locale} messages={translations[locale]}>
-        <TableOfContents data={config} />
+        <ComponentOwner data={config} />
       </IntlProvider>,
       document.getElementById(config.elementId)
     );
