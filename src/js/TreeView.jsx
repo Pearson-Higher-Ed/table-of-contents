@@ -8,6 +8,7 @@
 import React, {PropTypes} from 'react';
 import {intlShape, injectIntl} from 'react-intl';
 import {messages} from './defaultMessages';
+import ReactDOM from 'react-dom';
 
 export class TreeNode extends React.Component {
   constructor(props) {
@@ -59,6 +60,17 @@ export class TreeNode extends React.Component {
     }
   }
 
+  handleUp(e) {
+    switch(e.key) {
+      case "ArrowDown":
+          this.props.handleFocus(this.props.id+1);
+      break;
+      case "ArrowUp":
+          this.props.handleFocus(this.props.id-1); 
+      break;
+    }
+  }
+
   render() {
     let nodes = [];
     const self = this;
@@ -81,7 +93,10 @@ export class TreeNode extends React.Component {
     }
 
     return (
-      <li className= {'list-group-item ' + (this.state.expanded ? 'selected': '')}>
+      <li className= {'list-group-item ' + (this.state.expanded ? 'selected': '')}
+          onKeyUp={this.handleUp.bind(this)}
+          ref='li'
+          tabIndex="0">
         <a href= "javascript:void(0)"
           className= {classStr}
           role= "button"
@@ -113,13 +128,20 @@ class TreeView extends React.Component {
     };
   }
 
+  handleFocus(id) {
+    let TreeNode = this.refs['TreeNode' + id];
+    if (!TreeNode) return;
+    let li = TreeNode.refs.li;
+    ReactDOM.findDOMNode(li).focus();
+  }
+
   render() {
     const self = this;
     const list = this.state.list;
     const field = this.props.data.childField || 'children';
 
-    const nodes = list.map(function(n) {
-      return <TreeNode key= {n.id} intl= {self.props.intl} node= {n} children= {n[field] ? n[field] : []} currentDepth= {self.state.currentDepth} data= {self.props.data} />
+    const nodes = list.map(function(n,i) {
+      return <TreeNode key= {n.id} id={i}  intl= {self.props.intl} node= {n} children= {n[field] ? n[field] : []} currentDepth= {self.state.currentDepth} data= {self.props.data} handleFocus={self.handleFocus.bind(self)} ref={'TreeNode' + i}/>
     });
 
     return(
