@@ -8,6 +8,7 @@
 import React, {PropTypes} from 'react';
 import {intlShape, injectIntl} from 'react-intl';
 import {messages} from './defaultMessages';
+import ReactDom from 'react-dom';
 
 export class TreeNode extends React.Component {
   constructor(props) {
@@ -16,6 +17,9 @@ export class TreeNode extends React.Component {
       currentDepth: (this.props.currentDepth || 1),
       expanded: false
     };
+  }
+  componentDidMount() {
+    ReactDom.findDOMNode(this.list).setAttribute('listIndex', this.props.id)
   }
 
   toggle() {
@@ -82,7 +86,8 @@ export class TreeNode extends React.Component {
 
     return (
       <li className= {'list-group-item ' + (this.state.expanded ? 'selected': '')}
-          tabIndex='0'>
+          tabIndex='0'
+          ref={list => this.list = list}>
         <a href= "javascript:void(0)"
           className= {classStr}
           role= "button"
@@ -119,8 +124,8 @@ class TreeView extends React.Component {
     const list = this.state.list;
     const field = this.props.data.childField || 'children';
 
-    const nodes = list.map(function(n) {
-      return <TreeNode key= {n.id} intl= {self.props.intl} node= {n} children= {n[field] ? n[field] : []} currentDepth= {self.state.currentDepth} data= {self.props.data} />
+    const nodes = list.map(function(n,i) {
+      return <TreeNode key= {n.id} id={i} intl= {self.props.intl} node= {n} children= {n[field] ? n[field] : []} currentDepth= {self.state.currentDepth} data= {self.props.data} />
     });
 
     return(
