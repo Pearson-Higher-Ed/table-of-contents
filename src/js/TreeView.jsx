@@ -86,7 +86,6 @@ export class TreeNode extends React.Component {
 
     return (
       <li className= {'list-group-item ' + (this.state.expanded ? 'selected': '')}
-          tabIndex='0'
           ref={list => this.list = list}>
         <a href= "javascript:void(0)"
           className= {classStr}
@@ -124,7 +123,7 @@ class TreeView extends React.Component {
     const list = this.state.list;
     const field = this.props.data.childField || 'children';
 
-    const nodes = list.map(function(n,i) {
+    const nodes = list.map(function(n, i) {
       return <TreeNode key= {n.id} id={i} intl= {self.props.intl} node= {n} children= {n[field] ? n[field] : []} currentDepth= {self.state.currentDepth} data= {self.props.data} />
     });
 
