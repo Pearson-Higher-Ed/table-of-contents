@@ -9,6 +9,25 @@ import React, {PropTypes} from 'react';
 import {intlShape, injectIntl} from 'react-intl';
 import {messages} from './defaultMessages';
 import ReactDom from 'react-dom';
+import IconButton from 'material-ui/IconButton'
+import SvgIcon from 'material-ui/SvgIcon'
+
+const ExpandBtn = (props) => (
+  <SvgIcon {...props}>
+    <path d="M1158.33104,54.2836362 C1158.71313,53.9055017 1159.33176,53.9055017 1159.71386,54.2836362 C1160.0951,54.6614882 1160.09566,55.2744731 1159.71386,55.6528903 L1154.1919,61.064623 C1153.80981,61.4427575 1153.19061,61.4427575 1152.80852,61.064623 L1147.28657,55.6528903 C1146.90448,55.2744731 1146.90448,54.6620534 1147.28657,54.2836362 C1147.66838,53.9055017 1148.2873,53.9055017 1148.66911,54.2833536 L1153.50007,58.7214888 L1158.33104,54.2836362 Z"  fill="#252525" transform="translate(-1147.000000, -54.000000)"></path>
+  </SvgIcon>
+);
+
+const CollapseBtn = (props) => (
+  <SvgIcon {...props}>
+    <path d="M2.60946667,7.99993333 L9.47146667,1.13793333 C9.73146667,0.877266667 9.73146667,0.455933333 9.47146667,0.195266667 C9.21146667,-0.0654 8.7888,-0.0654 8.5288,0.195266667 L1.19546667,7.5286 C0.9348,7.78926667 0.9348,8.2106 1.19546667,8.47126667 L8.5288,15.8046 C8.6588,15.9346 8.82946667,15.9999333 9.00013333,15.9999333 C9.1708,15.9999333 9.34146667,15.9346 9.47146667,15.8046 C9.73146667,15.5439333 9.73146667,15.1226 9.47146667,14.8619333 L2.60946667,7.99993333 Z"  fill="#252525" transform="translate(376.000000, 36.833333) rotate(90.000000) translate(-376.000000, -36.833333) translate(371.500000, 28.833333)"></path>
+  </SvgIcon>
+);
+
+const btnStyle = {
+  width: '16px',
+  height: '9px'
+}
 
 export class TreeNode extends React.Component {
   constructor(props) {
@@ -27,7 +46,7 @@ export class TreeNode extends React.Component {
   }
 
   handleLinkClick(pageId) {
-    window.pubsub.publish('GO_TO_PAGE', pageId);
+    //window.pubsub.publish('GO_TO_PAGE', pageId);
   }
 
   isToggleAble() {
@@ -52,12 +71,14 @@ export class TreeNode extends React.Component {
 
     /*Logic to display toggle icon for first level headings and then depending on depth, show/hide the icon*/
     if (currDepth === 1 ||(currDepth !== 1 && currDepth < depth && hasChildren)) {
-      return(<a role="button"
+      return(<IconButton role="button"
+        label = "Click"
         onClick= {this.toggle.bind(this)}
         className= {'icon '+ classStr}
         aria-controls= {this.props.node.id}
         aria-expanded= {this.state.expanded}
-      ></a>)
+        iconStyle={btnStyle}
+      >{this.state.expanded ? <CollapseBtn viewBox="368 33 16 9" />: <ExpandBtn viewBox="0 0 16 9" />}</IconButton>)
     }else {
       return null;
     }
@@ -85,7 +106,7 @@ export class TreeNode extends React.Component {
     }
 
     return (
-      <li className= {'list-group-item ' + (this.state.expanded ? 'selected': '')}
+  <li className= {'list-group-item ' + (this.state.expanded ? 'selected': '')}
           ref={list => this.list = list}>
         <a href= "javascript:void(0)"
           className= {classStr}
