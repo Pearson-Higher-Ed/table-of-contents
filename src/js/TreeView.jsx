@@ -65,7 +65,7 @@ export class TreeNode extends React.Component {
 
   renderClickIcon() {
     const classStr = this.getClassName();
-    const depth = this.props.data.depth;
+    const depth = this.props.depth;
     const currDepth = this.props.currentDepth;
     const hasChildren = !!(this.props.children.length);
 
@@ -90,7 +90,7 @@ export class TreeNode extends React.Component {
     const data = this.props.data;
     const depth = this.props.depth;
     const currentDepth = this.props.currentDepth;
-    const classStr = this.props.data.separateToggleIcon ? 'content' : this.getClassName();
+    const classStr = this.props.separateToggleIcon ? 'content' : this.getClassName();
     const doToggle = this.isToggleAble();
 
     if (depth > currentDepth) {
@@ -116,10 +116,10 @@ export class TreeNode extends React.Component {
           role= "button"
           aria-controls= {this.props.node.id}
           aria-expanded= {(doToggle ? (this.state.expanded ? true : false) : '')}
-          onClick= {((doToggle && !this.props.data.separateToggleIcon)  ? this.toggle.bind(this) : this.handleLinkClick.bind(this, this.props.node.id))}>
+          onClick= {((doToggle && !this.props.separateToggleIcon)  ? this.toggle.bind(this) : this.handleLinkClick.bind(this, this.props.node.id))}>
           <span className= "title">{this.props.node.title}</span>
         </a>
-        {(this.props.data.separateToggleIcon ? this.renderClickIcon(currentDepth, depth) : '')}
+        {(this.props.separateToggleIcon ? this.renderClickIcon(currentDepth, depth) : '')}
         {(() => {
           if (nodes.length) {
             return(<ul id={this.props.node.id} className={'child-list-group '+(this.state.expanded ? 'show' : 'hide')} aria-hidden={!this.state.expanded}>
@@ -147,7 +147,7 @@ class TreeView extends React.Component {
     const field = this.props.childField || 'children';
 
     const nodes = list.map(function(n, i) {
-      return <TreeNode depth={self.props.depth} showDuplicateTitle={self.props.showDuplicateTitle} key= {n.id} id={i} intl= {self.props.intl} 
+      return <TreeNode separateToggleIcon={self.props.separateToggleIcon} depth={self.props.depth} showDuplicateTitle={self.props.showDuplicateTitle} key= {n.id} id={i} intl= {self.props.intl} 
       node= {n} children= {n[field] ? n[field] : []} currentDepth= {self.state.currentDepth} data= {self.props.data} />
     });
 

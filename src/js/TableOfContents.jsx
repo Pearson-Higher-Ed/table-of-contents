@@ -26,7 +26,7 @@ class TableOfContents extends React.Component {
           </div>
         </div>
         
-          <TreeView data={this.props.data} showDuplicateTitle={this.props.showDuplicateTitle} depth={this.props.depth} childField={this.props.childField}/>
+          <TreeView separateToggleIcon={this.props.separateToggleIcon} data={this.props.data} showDuplicateTitle={this.props.showDuplicateTitle} depth={this.props.depth} childField={this.props.childField}/>
        
       </div>
     )
