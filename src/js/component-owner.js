@@ -26,7 +26,7 @@ class ComponentOwner extends React.Component {
   render() {    
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <TableOfContents data={this.props.data} />
+        <TableOfContents data={this.props.data} showDuplicateTitle={true} />
       </MuiThemeProvider>
     )
   }

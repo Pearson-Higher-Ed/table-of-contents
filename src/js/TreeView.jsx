@@ -95,12 +95,15 @@ export class TreeNode extends React.Component {
 
     if (depth > currentDepth) {
       nodes = this.props.children.map(function(n) {
-        return <TreeNode key= {'display-'+n.id} intl= {self.props.intl} node= {n} children= {n.children || []} currentDepth= {currentDepth+1} data= {self.props.data} />
+        return <TreeNode key= {'display-'+n.id} intl= {self.props.intl} node= {n} children= {n.children || []} 
+        currentDepth= {currentDepth+1} data= {self.props.data} />
       });
-      if (depth > currentDepth && this.props.data.showDuplicateTitle && (this.props.children.length || currentDepth === 1)) {
+      //debugger;
+      if (depth > currentDepth && this.props.showDuplicateTitle && (this.props.children.length || currentDepth === 1)) {
         //repeat the chapter title once again as a link to the respective content.
         nodes.unshift(
-          <TreeNode key= {this.props.node.id} intl= {this.props.intl} node= {this.props.node} children= {[]} currentDepth= {currentDepth+1} data= {this.props.data} />
+          <TreeNode key= {this.props.node.id} intl= {this.props.intl} node= {this.props.node} children= {[]} 
+          currentDepth= {currentDepth+1} data= {this.props.data} />
         )
       }
     }
@@ -132,7 +135,7 @@ export class TreeNode extends React.Component {
 class TreeView extends React.Component {
   constructor(props) {
     super(props);
-
+    debugger
     this.state = {
       list: this.props.data.content.list,
       currentDepth: 1
@@ -145,7 +148,8 @@ class TreeView extends React.Component {
     const field = this.props.data.childField || 'children';
 
     const nodes = list.map(function(n, i) {
-      return <TreeNode key= {n.id} id={i} intl= {self.props.intl} node= {n} children= {n[field] ? n[field] : []} currentDepth= {self.state.currentDepth} data= {self.props.data} />
+      return <TreeNode showDuplicateTitle={self.props.showDuplicateTitle} key= {n.id} id={i} intl= {self.props.intl} 
+      node= {n} children= {n[field] ? n[field] : []} currentDepth= {self.state.currentDepth} data= {self.props.data} />
     });
 
     return(
@@ -158,12 +162,14 @@ class TreeView extends React.Component {
 
 TreeView.propTypes={
   
+  showDuplicateTitle:PropTypes.bool,
   locale: PropTypes.string,
   data: PropTypes.shape({
     content: PropTypes.object.isRequired,
     depth: PropTypes.number.isRequired,
     childField: PropTypes.string.isRequired
   })
+  
 };
 
 export default TreeView;

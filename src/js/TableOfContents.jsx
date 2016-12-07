@@ -1,5 +1,4 @@
-import React, { PropTypes } from 'react';
-
+import React from 'react';
 import TreeView from './TreeView';
 
 class TableOfContents extends React.Component {
@@ -15,8 +14,7 @@ class TableOfContents extends React.Component {
     const author = this.props.data.content.author;
     const maxCharTitle = this.props.data.maxTitleChars|| 55;
     const maxCharAuthor = this.props.data.maxAuthorChars || 60;
-
-
+    
     return(
       <div id="toc">
         <div className="toc-wrapper">
@@ -28,21 +26,11 @@ class TableOfContents extends React.Component {
           </div>
         </div>
         
-          <TreeView data={this.props.data} />
+          <TreeView data={this.props.data} showDuplicateTitle={this.props.showDuplicateTitle}/>
        
       </div>
     )
   }
 };
-
-// TableOfContents.propTypes={
-//   intl: intlShape.isRequired,
-//   locale: PropTypes.string,
-//   data: PropTypes.shape({
-//     content: PropTypes.object.isRequired,
-//     depth: PropTypes.number.isRequired,
-//     childField: PropTypes.string.isRequired
-//   })
-// };
 
 export default TableOfContents;
