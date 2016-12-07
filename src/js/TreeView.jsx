@@ -166,7 +166,7 @@ TreeView.propTypes={
   locale: PropTypes.string,
   childField: PropTypes.string.isRequired,
   data: PropTypes.shape({
-    content: PropTypes.object.isRequired,
+    content: PropTypes.object.isRequired
   })
   
 };
