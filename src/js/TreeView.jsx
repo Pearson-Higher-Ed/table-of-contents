@@ -163,10 +163,11 @@ class TreeView extends React.Component {
 TreeView.propTypes={
   
   showDuplicateTitle:PropTypes.bool,
+  depth : PropTypes.number.isRequired,
   locale: PropTypes.string,
   data: PropTypes.shape({
     content: PropTypes.object.isRequired,
-    depth: PropTypes.number.isRequired,
+    //depth: PropTypes.number.isRequired,
     childField: PropTypes.string.isRequired
   })
   
