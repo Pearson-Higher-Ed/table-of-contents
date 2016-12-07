@@ -52,7 +52,7 @@ export class TreeNode extends React.Component {
   isToggleAble() {
     const hasChildren = !! this.props.children.length;
     const currDepth = this.props.currentDepth;
-    const depth = this.props.data.depth;
+    const depth = this.props.depth;
     return (currDepth === 1 && (hasChildren || this.props.showDuplicateTitle) ||(currDepth !== 1 && currDepth < depth && hasChildren));
   }
 
@@ -88,7 +88,7 @@ export class TreeNode extends React.Component {
     let nodes = [];
     const self = this;
     const data = this.props.data;
-    const depth = data.depth;
+    const depth = this.props.depth;
     const currentDepth = this.props.currentDepth;
     const classStr = this.props.data.separateToggleIcon ? 'content' : this.getClassName();
     const doToggle = this.isToggleAble();
@@ -135,7 +135,6 @@ export class TreeNode extends React.Component {
 class TreeView extends React.Component {
   constructor(props) {
     super(props);
-    debugger
     this.state = {
       list: this.props.data.content.list,
       currentDepth: 1
@@ -145,10 +144,10 @@ class TreeView extends React.Component {
   render() {
     const self = this;
     const list = this.state.list;
-    const field = this.props.data.childField || 'children';
+    const field = this.props.childField || 'children';
 
     const nodes = list.map(function(n, i) {
-      return <TreeNode showDuplicateTitle={self.props.showDuplicateTitle} key= {n.id} id={i} intl= {self.props.intl} 
+      return <TreeNode depth={self.props.depth} showDuplicateTitle={self.props.showDuplicateTitle} key= {n.id} id={i} intl= {self.props.intl} 
       node= {n} children= {n[field] ? n[field] : []} currentDepth= {self.state.currentDepth} data= {self.props.data} />
     });
 
