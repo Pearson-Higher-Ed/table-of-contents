@@ -165,10 +165,9 @@ TreeView.propTypes={
   showDuplicateTitle:PropTypes.bool,
   depth : PropTypes.number.isRequired,
   locale: PropTypes.string,
+  childField: PropTypes.string.isRequired,
   data: PropTypes.shape({
     content: PropTypes.object.isRequired,
-    //depth: PropTypes.number.isRequired,
-    childField: PropTypes.string.isRequired
   })
   
 };
