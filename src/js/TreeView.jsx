@@ -123,7 +123,7 @@ export class TreeNode extends React.Component {
     }
 
     return (
-      <li className= {'list-group-item ' + (this.state.expanded ? 'selected': '')}
+      <li className= {'list-group-item ' + (this.state.expanded ? 'selected': '') + (this.props.currentDepth > 1 ? ' toc-child' : ' toc-parent')}
         onKeyDown={this.handleKeyDown}
         ref={list => this.list = list}>
         <a href= "javascript:void(0)"
