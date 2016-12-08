@@ -3,7 +3,7 @@ import TreeView from './TreeView';
 
 class TableOfContents extends React.Component {
   constructor(props) {
-    super(props);
+    super(props);   
   }
 
   render() {
@@ -24,10 +24,15 @@ class TableOfContents extends React.Component {
               <p className="header-author">{author.length > maxCharAuthor ? author.substring(0, this.props.data.maxAuthorChars)+'...' : author}</p>
             </div>
           </div>
-        </div>
-        
-          <TreeView separateToggleIcon={this.props.separateToggleIcon} data={this.props.data} showDuplicateTitle={this.props.showDuplicateTitle} depth={this.props.depth} childField={this.props.childField}/>
-       
+        </div>        
+          <TreeView 
+            separateToggleIcon={this.props.separateToggleIcon} 
+            data={this.props.data} 
+            showDuplicateTitle={this.props.showDuplicateTitle} 
+            depth={this.props.depth} 
+            childField={this.props.childField}
+            tocClick={this.props.clickTocHandler}
+          />       
       </div>
     )
   }

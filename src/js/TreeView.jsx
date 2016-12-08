@@ -32,10 +32,11 @@ const btnStyle = {
 export class TreeNode extends React.Component {
   constructor(props) {
     super(props);
+    
     this.state = {
       currentDepth: (this.props.currentDepth || 1),
       expanded: false
-    };
+    };    
   }
   componentDidMount() {
     ReactDom.findDOMNode(this.list).setAttribute('listIndex', this.props.id)
@@ -46,7 +47,7 @@ export class TreeNode extends React.Component {
   }
 
   handleLinkClick(pageId) {
-    //window.pubsub.publish('GO_TO_PAGE', pageId);
+    this.props.tocClick(pageId);
   }
 
   isToggleAble() {
@@ -96,14 +97,14 @@ export class TreeNode extends React.Component {
     if (depth > currentDepth) {
       nodes = this.props.children.map(function(n) {
         return <TreeNode key= {'display-'+n.id} intl= {self.props.intl} node= {n} children= {n.children || []} 
-        currentDepth= {currentDepth+1} data= {self.props.data} />
+        currentDepth= {currentDepth+1} data= {self.props.data} tocClick={self.props.tocClick} />
       });
       //debugger;
       if (depth > currentDepth && this.props.showDuplicateTitle && (this.props.children.length || currentDepth === 1)) {
         //repeat the chapter title once again as a link to the respective content.
         nodes.unshift(
           <TreeNode key= {this.props.node.id} intl= {this.props.intl} node= {this.props.node} children= {[]} 
-          currentDepth= {currentDepth+1} data= {this.props.data} />
+          currentDepth= {currentDepth+1} data= {this.props.data} tocClick={self.props.tocClick} />
         )
       }
     }
@@ -116,7 +117,7 @@ export class TreeNode extends React.Component {
           role= "button"
           aria-controls= {this.props.node.id}
           aria-expanded= {(doToggle ? (this.state.expanded ? true : false) : '')}
-          onClick= {((doToggle && !this.props.separateToggleIcon)  ? this.toggle.bind(this) : this.handleLinkClick.bind(this, this.props.node.id))}>
+          onClick= {((doToggle && !this.props.separateToggleIcon)  ? this.toggle.bind(this) : this.handleLinkClick.bind(self, this.props.node.id))}>
           <span className= "title">{this.props.node.title}</span>
         </a>
         {(this.props.separateToggleIcon ? this.renderClickIcon(currentDepth, depth) : '')}
@@ -147,8 +148,18 @@ class TreeView extends React.Component {
     const field = this.props.childField || 'children';
 
     const nodes = list.map(function(n, i) {
-      return <TreeNode separateToggleIcon={self.props.separateToggleIcon} depth={self.props.depth} showDuplicateTitle={self.props.showDuplicateTitle} key= {n.id} id={i} intl= {self.props.intl} 
-      node= {n} children= {n[field] ? n[field] : []} currentDepth= {self.state.currentDepth} data= {self.props.data} />
+      return <TreeNode 
+               separateToggleIcon={self.props.separateToggleIcon} 
+               depth={self.props.depth} 
+               showDuplicateTitle={self.props.showDuplicateTitle} 
+               key={n.id} id={i} 
+               intl={self.props.intl} 
+               node={n} 
+               children={n[field] ? n[field] : []} 
+               currentDepth= {self.state.currentDepth} 
+               data={self.props.data}
+               tocClick={self.props.tocClick} 
+             />
     });
 
     return(
