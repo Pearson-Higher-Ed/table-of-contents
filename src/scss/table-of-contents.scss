@@ -106,7 +106,7 @@
   li{
     a{
       display: inline-block;
-      width:88%;
+      // width:88%;
       &.expanded{
         background: transparent url(./images/ic-closeup.svg)no-repeat 95% 50%;
       }
@@ -115,7 +115,7 @@
       }
       span.title{
         display:inline-block;
-        width:90%;
+        //width:90%;
       }
       &.icon{
         display: inline;

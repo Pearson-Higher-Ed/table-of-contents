@@ -28,6 +28,10 @@ const btnStyle = {
   width: '16px',
   height: '9px'
 }
+const iconButtonStyle = {
+  paddingTop: '20px',
+  float: 'right'
+}
 
 export class TreeNode extends React.Component {
   constructor(props) {
@@ -39,7 +43,8 @@ export class TreeNode extends React.Component {
     };    
   }
   componentDidMount() {
-    ReactDom.findDOMNode(this.list).setAttribute('listIndex', this.props.id)
+    ReactDom.findDOMNode(this.list).setAttribute('listIndex', this.props.id);
+    ReactDom.findDOMNode(this.list).setAttribute('tabIndex', '-1');
   }
 
   toggle() {
@@ -64,6 +69,13 @@ export class TreeNode extends React.Component {
     return ((this.isToggleAble()) ? (this.state.expanded ? expandedClsStr : collapsedClsStr) : clsStr);
   }
 
+  handleKeyDown = (event) => {
+    if ((event.which === 13 || event.keyCode === 13)) {
+      // ((doToggle && !this.props.separateToggleIcon)  ? this.toggle.bind(this) : this.handleLinkClick.bind(self, this.props.node.id));
+      this.toggle();
+    }
+  }
+
   renderClickIcon() {
     const classStr = this.getClassName();
     const depth = this.props.depth;
@@ -79,6 +91,7 @@ export class TreeNode extends React.Component {
         aria-controls= {this.props.node.id}
         aria-expanded= {this.state.expanded}
         iconStyle={btnStyle}
+        style={iconButtonStyle}
       >{this.state.expanded ? <CollapseBtn viewBox="368 33 16 9" />: <ExpandBtn viewBox="0 0 16 9" />}</IconButton>)
     }else {
       return null;
@@ -110,8 +123,9 @@ export class TreeNode extends React.Component {
     }
 
     return (
-  <li className= {'list-group-item ' + (this.state.expanded ? 'selected': '')}
-          ref={list => this.list = list}>
+      <li className= {'list-group-item ' + (this.state.expanded ? 'selected': '')}
+        onKeyDown={this.handleKeyDown}
+        ref={list => this.list = list}>
         <a href= "javascript:void(0)"
           className= {classStr}
           role= "button"
