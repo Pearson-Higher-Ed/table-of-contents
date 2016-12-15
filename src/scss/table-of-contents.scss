@@ -125,3 +125,18 @@
     }
   }
 }
+.empty-message {
+  text-align: center;
+  vertical-align: middle;
+  display: table-cell;
+  float: none;
+  color: #4c5259;
+  font-size: 26px;
+  font-weight: 200;
+  line-height: 20px;
+  padding: 20px;
+    p{
+      line-height: 1.2;
+      margin-bottom: 0;
+    }
+}

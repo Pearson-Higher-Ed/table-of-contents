@@ -160,27 +160,37 @@ class TreeView extends React.Component {
     const self = this;
     const list = this.state.list;
     const field = this.props.childField || 'children';
+    if(this.props.data && this.props.data.content && this.props.data.content.list && this.props.data.content.list.length> 0) {
+      const nodes = list.map(function(n, i) {
+        return <TreeNode
+           separateToggleIcon={self.props.separateToggleIcon}
+           depth={self.props.depth}
+           showDuplicateTitle={self.props.showDuplicateTitle}
+           key={n.id} id={i}
+           intl={self.props.intl}
+           node={n}
+           children={n[field] ? n[field] : []}
+           currentDepth= {self.state.currentDepth}
+           data={self.props.data}
+           tocClick={self.props.tocClick}
+        />
+      });
 
-    const nodes = list.map(function(n, i) {
-      return <TreeNode 
-               separateToggleIcon={self.props.separateToggleIcon} 
-               depth={self.props.depth} 
-               showDuplicateTitle={self.props.showDuplicateTitle} 
-               key={n.id} id={i} 
-               intl={self.props.intl} 
-               node={n} 
-               children={n[field] ? n[field] : []} 
-               currentDepth= {self.state.currentDepth} 
-               data={self.props.data}
-               tocClick={self.props.tocClick} 
-             />
-    });
-
-    return(
-      <ul className="list-group">
-           {nodes}
-      </ul>
-    );
+      return(
+        <ul className="list-group">
+             {nodes}
+        </ul>
+      );
+    }
+    else {
+      return(
+        <ul className="list-group">
+          <li className = {'list-group-item empty-message'}>
+            <p>There are no Table Of Contents to show</p>
+          </li>
+        </ul>
+      );
+    }
   }
 }
 
