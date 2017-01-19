@@ -61,6 +61,7 @@ function init() {
       content: sampleList,
       childField: 'children',
       cbk: clickHandler,
+      showDuplicateTitle:false,
       separateToggleIcon: true
     }
   }));

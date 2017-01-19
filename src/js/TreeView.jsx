@@ -113,7 +113,7 @@ export class TreeNode extends React.Component {
         currentDepth= {currentDepth+1} data= {self.props.data} tocClick={self.props.tocClick} />
       });
       //debugger;
-      if (depth > currentDepth && this.props.showDuplicateTitle && (this.props.children.length || currentDepth === 1)) {
+      if (depth > currentDepth && this.props.data.showDuplicateTitle && (this.props.children.length || currentDepth === 1)) {
         //repeat the chapter title once again as a link to the respective content.
         nodes.unshift(
           <TreeNode key= {this.props.node.id} intl= {this.props.intl} node= {this.props.node} children= {[]} 
@@ -165,7 +165,6 @@ class TreeView extends React.Component {
         return <TreeNode
            separateToggleIcon={self.props.separateToggleIcon}
            depth={self.props.depth}
-           showDuplicateTitle={self.props.showDuplicateTitle}
            key={n.id} id={i}
            intl={self.props.intl}
            node={n}
@@ -196,7 +195,6 @@ class TreeView extends React.Component {
 
 TreeView.propTypes={
   
-  showDuplicateTitle:PropTypes.bool,
   depth : PropTypes.number.isRequired,
   locale: PropTypes.string,
   childField: PropTypes.string.isRequired,
