@@ -131,7 +131,7 @@ export class TreeNode extends React.Component {
           role= "button"
           aria-controls= {this.props.node.id}
           aria-expanded= {(doToggle ? (this.state.expanded ? true : false) : '')}
-          onClick= {((doToggle && !this.props.separateToggleIcon)  ? this.toggle.bind(this) : this.handleLinkClick.bind(self, this.props.node.id))}>
+          onClick= {((this.props.currentDepth > 1)  ? this.handleLinkClick.bind(self, this.props.node.id) : this.toggle.bind(this))}>
           <span className= "title">{this.props.node.title}</span>
         </a>
         {(this.props.separateToggleIcon ? this.renderClickIcon(currentDepth, depth) : '')}
