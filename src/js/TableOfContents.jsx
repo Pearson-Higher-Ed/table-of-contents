@@ -31,10 +31,15 @@ class TableOfContents extends React.Component {
             depth={this.props.depth} 
             childField={this.props.childField}
             tocClick={this.props.clickTocHandler}
+            drawerCallbacks = {this.props.drawerCallbacks}
           />       
       </div>
     )
   }
+};
+
+TableOfContents.propTypes = {
+  drawerCallbacks: React.PropTypes.object
 };
 
 export default TableOfContents;

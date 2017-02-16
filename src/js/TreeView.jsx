@@ -39,9 +39,11 @@ export class TreeNode extends React.Component {
     
     this.state = {
       currentDepth: (this.props.currentDepth || 1),
-      expanded: false
+      expanded: false,
+      nexttab: false
     };    
   }
+
   componentDidMount() {
     ReactDom.findDOMNode(this.list).setAttribute('listIndex', this.props.id);
     ReactDom.findDOMNode(this.list).setAttribute('tabIndex', '-1');
@@ -69,7 +71,34 @@ export class TreeNode extends React.Component {
     return ((this.isToggleAble()) ? (this.state.expanded ? expandedClsStr : collapsedClsStr) : clsStr);
   }
 
-  handleKeyDown = (event) => {
+  handleKeyDown = (event) => {  
+    const current_toc = document.getElementsByClassName('toc-child');
+    const last_element = current_toc[current_toc.length - 1];
+    const current_ptoc = document.getElementsByClassName('toc-parent-content');
+    console.log('current parent length:', current_ptoc.length);
+    const last_parent_content = current_ptoc[current_ptoc.length - 1];
+    console.log('last parent :', last_parent_content);
+    if(this.state.nexttab === true) {
+      this.setState({nexttab: false});
+      this.props.drawerCallbacks.onActive('bookmarks');
+      this.props.drawerCallbacks.changeState(1);
+    }
+    const classname = 'toc-parent-content';
+    if( event.target.className && new RegExp('(^|\\s)' + classname + '(\\s|$)').test(event.target.className) ) {
+      if( event.target === last_parent_content) {
+        const ariaexp = document.getElementsByClassName(event.target.className)[0].getAttribute('aria-expanded');
+        if( ariaexp == 'false' ) {
+          this.setState({nexttab: true});
+        }
+        else {
+          this.setState({nexttab: false});
+        }
+      }
+    }
+    if( event.target.parentNode === last_element ) {
+      this.props.drawerCallbacks.onActive('bookmarks');
+      this.props.drawerCallbacks.changeState(1);
+    }
     if ((event.which === 13 || event.keyCode === 13)) {
       // ((doToggle && !this.props.separateToggleIcon)  ? this.toggle.bind(this) : this.handleLinkClick.bind(self, this.props.node.id));
       this.toggle();
@@ -110,14 +139,16 @@ export class TreeNode extends React.Component {
     if (depth > currentDepth) {
       nodes = this.props.children.map(function(n) {
         return <TreeNode key= {'display-'+n.id} intl= {self.props.intl} node= {n} children= {n.children || []} 
-        currentDepth= {currentDepth+1} data= {self.props.data} tocClick={self.props.tocClick} />
+        currentDepth= {currentDepth+1} data= {self.props.data} tocClick={self.props.tocClick}
+        drawerCallbacks = {self.props.drawerCallbacks} />
       });
       //debugger;
       if (depth > currentDepth && this.props.data.showDuplicateTitle && (this.props.children.length || currentDepth === 1)) {
         //repeat the chapter title once again as a link to the respective content.
         nodes.unshift(
           <TreeNode key= {this.props.node.id} intl= {this.props.intl} node= {this.props.node} children= {[]} 
-          currentDepth= {currentDepth+1} data= {this.props.data} tocClick={self.props.tocClick} />
+          currentDepth= {currentDepth+1} data= {this.props.data} tocClick={self.props.tocClick}
+          drawerCallbacks = {self.props.drawerCallbacks} />
         )
       }
     }
@@ -127,7 +158,7 @@ export class TreeNode extends React.Component {
         onKeyDown={this.handleKeyDown}
         ref={list => this.list = list}>
         <a href= "javascript:void(0)"
-          className= {classStr}
+          className= {classStr + (this.props.currentDepth > 1 ? ' toc-child-content' : ' toc-parent-content')}
           role= "button"
           aria-controls= {this.props.node.id}
           aria-expanded= {(doToggle ? (this.state.expanded ? true : false) : '')}
@@ -172,6 +203,7 @@ class TreeView extends React.Component {
            currentDepth= {self.state.currentDepth}
            data={self.props.data}
            tocClick={self.props.tocClick}
+           drawerCallbacks = {self.props.drawerCallbacks}
         />
       });
 
@@ -200,7 +232,8 @@ TreeView.propTypes={
   childField: PropTypes.string.isRequired,
   data: PropTypes.shape({
     content: PropTypes.object.isRequired
-  })
+  }),
+  drawerCallbacks: React.PropTypes.object
   
 };
 
