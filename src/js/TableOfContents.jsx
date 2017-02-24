@@ -32,6 +32,7 @@ class TableOfContents extends React.Component {
             childField={this.props.childField}
             tocClick={this.props.clickTocHandler}
             drawerCallbacks = {this.props.drawerCallbacks}
+            intl={this.props.intl}
           />       
       </div>
     )

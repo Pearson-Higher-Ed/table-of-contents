@@ -62,7 +62,8 @@ function init() {
       childField: 'children',
       cbk: clickHandler,
       showDuplicateTitle:false,
-      separateToggleIcon: true
+      separateToggleIcon: true,
+      locale:'ts'
     }
   }));
 }

@@ -23,10 +23,12 @@ class ComponentOwner extends React.Component {
     };
   }
 
-  render() {    
+  render() {
+    //const {formatMessage} = this.props.intl;
+    //console.log(formatMessage(messages.expandedList));
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <TableOfContents separateToggleIcon={true} data={this.props.data} 
+        <TableOfContents intl={this.props.intl} separateToggleIcon={true} data={this.props.data} 
         depth={5} childField={"children"}/>
       </MuiThemeProvider>
     )

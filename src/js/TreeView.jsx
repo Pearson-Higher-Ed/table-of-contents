@@ -135,6 +135,7 @@ export class TreeNode extends React.Component {
     const currentDepth = this.props.currentDepth;
     const classStr = this.props.separateToggleIcon ? 'content' : this.getClassName();
     const doToggle = this.isToggleAble();
+    const {formatMessage} = this.props.intl; 
 
     if (depth > currentDepth) {
       nodes = this.props.children.map(function(n) {
@@ -162,6 +163,7 @@ export class TreeNode extends React.Component {
           role= "button"
           aria-controls= {this.props.node.id}
           aria-expanded= {(doToggle ? (this.state.expanded ? true : false) : '')}
+          aria-label={(doToggle ? (this.state.expanded ? formatMessage(messages.expandedList) : formatMessage(messages.collapsedList)) : '')}
           onClick= {((this.props.currentDepth > 1)  ? this.handleLinkClick.bind(self, this.props.node.id) : this.toggle.bind(this))}>
           <span className= "title">{this.props.node.title}</span>
         </a>
