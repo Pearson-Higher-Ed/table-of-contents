@@ -1,4 +1,5 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import TreeView from './TreeView';
 
 class TableOfContents extends React.Component {
@@ -43,4 +44,4 @@ TableOfContents.propTypes = {
   drawerCallbacks: React.PropTypes.object
 };
 
-export default TableOfContents;
+export default injectIntl(TableOfContents);

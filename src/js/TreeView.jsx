@@ -6,7 +6,6 @@
  */
 
 import React, {PropTypes} from 'react';
-import {intlShape, injectIntl} from 'react-intl';
 import {messages} from './defaultMessages';
 import ReactDom from 'react-dom';
 import IconButton from 'material-ui/IconButton'
@@ -78,16 +77,16 @@ export class TreeNode extends React.Component {
     console.log('current parent length:', current_ptoc.length);
     const last_parent_content = current_ptoc[current_ptoc.length - 1];
     console.log('last parent :', last_parent_content);
-    if(this.state.nexttab === true) {
+    if (this.state.nexttab === true) {
       this.setState({nexttab: false});
       this.props.drawerCallbacks.onActive('bookmarks');
       this.props.drawerCallbacks.changeState(1);
     }
     const classname = 'toc-parent-content';
-    if( event.target.className && new RegExp('(^|\\s)' + classname + '(\\s|$)').test(event.target.className) ) {
-      if( event.target === last_parent_content) {
+    if ( event.target.className && new RegExp('(^|\\s)' + classname + '(\\s|$)').test(event.target.className) ) {
+      if ( event.target === last_parent_content) {
         const ariaexp = document.getElementsByClassName(event.target.className)[0].getAttribute('aria-expanded');
-        if( ariaexp == 'false' ) {
+        if ( ariaexp === 'false' ) {
           this.setState({nexttab: true});
         }
         else {
@@ -95,7 +94,7 @@ export class TreeNode extends React.Component {
         }
       }
     }
-    if( event.target.parentNode === last_element ) {
+    if ( event.target.parentNode === last_element ) {
       this.props.drawerCallbacks.onActive('bookmarks');
       this.props.drawerCallbacks.changeState(1);
     }
@@ -105,7 +104,7 @@ export class TreeNode extends React.Component {
     }
   }
 
-  renderClickIcon() {
+  renderClickIcon(formatMessage) {
     const classStr = this.getClassName();
     const depth = this.props.depth;
     const currDepth = this.props.currentDepth;
@@ -119,6 +118,7 @@ export class TreeNode extends React.Component {
         className= {'icon '+ classStr}
         aria-controls= {this.props.node.id}
         aria-expanded= {this.state.expanded}
+        aria-label={(this.state.expanded ? formatMessage(messages.expandedList) : formatMessage(messages.collapsedList))}
         iconStyle={btnStyle}
         style={iconButtonStyle}
       >{this.state.expanded ? <CollapseBtn viewBox="368 33 16 9" />: <ExpandBtn viewBox="0 0 16 9" />}</IconButton>)
@@ -163,11 +163,11 @@ export class TreeNode extends React.Component {
           role= "button"
           aria-controls= {this.props.node.id}
           aria-expanded= {(doToggle ? (this.state.expanded ? true : false) : '')}
-          aria-label={(doToggle ? (this.state.expanded ? formatMessage(messages.expandedList) : formatMessage(messages.collapsedList)) : '')}
+          aria-label={this.props.node.title}
           onClick= {((this.props.currentDepth > 1)  ? this.handleLinkClick.bind(self, this.props.node.id) : this.toggle.bind(this))}>
           <span className= "title">{this.props.node.title}</span>
         </a>
-        {(this.props.separateToggleIcon ? this.renderClickIcon(currentDepth, depth) : '')}
+        {(this.props.separateToggleIcon ? this.renderClickIcon(formatMessage) : '')}
         {(() => {
           if (nodes.length) {
             return(<ul id={this.props.node.id} className={'child-list-group '+(this.state.expanded ? 'show' : 'hide')} aria-hidden={!this.state.expanded}>
@@ -193,7 +193,7 @@ class TreeView extends React.Component {
     const self = this;
     const list = this.state.list;
     const field = this.props.childField || 'children';
-    if(this.props.data && this.props.data.content && this.props.data.content.list && this.props.data.content.list.length> 0) {
+    if (this.props.data && this.props.data.content && this.props.data.content.list && this.props.data.content.list.length> 0) {
       const nodes = list.map(function(n, i) {
         return <TreeNode
            separateToggleIcon={self.props.separateToggleIcon}
