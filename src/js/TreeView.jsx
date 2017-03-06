@@ -5,8 +5,8 @@
  * @type {boolean} separateToggleIcon - optional param to make the toggle icon separate from the content.
  */
 
-import React, {PropTypes} from 'react';
-import {messages} from './defaultMessages';
+import React, { PropTypes } from 'react';
+import { messages } from './defaultMessages';
 import ReactDom from 'react-dom';
 import IconButton from 'material-ui/IconButton'
 import SvgIcon from 'material-ui/SvgIcon'
@@ -135,7 +135,7 @@ export class TreeNode extends React.Component {
     const currentDepth = this.props.currentDepth;
     const classStr = this.props.separateToggleIcon ? 'content' : this.getClassName();
     const doToggle = this.isToggleAble();
-    const {formatMessage} = this.props.intl; 
+    const { formatMessage } = this.props.intl; 
 
     if (depth > currentDepth) {
       nodes = this.props.children.map(function(n) {

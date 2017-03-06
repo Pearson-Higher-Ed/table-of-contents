@@ -1,3 +1,13 @@
+import { addLocaleData } from 'react-intl';
+import enLocaleData from 'react-intl/locale-data/en';
+import frLocaleData from 'react-intl/locale-data/fr';
+import tsLocaleData from 'react-intl/locale-data/ts';
+
+const localeData = {
+  en: enLocaleData,
+  fr: frLocaleData,
+  ts: tsLocaleData
+};
 
 function init() {
   const sampleList = {};
@@ -48,11 +58,16 @@ function init() {
     children:[]
   }];
 
+  function getParam(item) {
+    const svalue = location.search.match(new RegExp('[\?\&]' + item + '=([^\&]*)(\&?)', 'i'));
+    return svalue ? svalue[1] : svalue;
+  }
 
   function clickHandler() {
     alert();
   }
-
+  const locale = getParam('lang') || 'en';
+  addLocaleData(localeData[locale]);
   // Demo eventing API
   document.body.dispatchEvent(new CustomEvent('o.InitToc', {
     detail: {
@@ -63,7 +78,7 @@ function init() {
       cbk: clickHandler,
       showDuplicateTitle:false,
       separateToggleIcon: true,
-      locale:'ts'
+      locale
     }
   }));
 }

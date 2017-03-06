@@ -1,35 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { addLocaleData, IntlProvider } from 'react-intl';
-import frLocaleData from 'react-intl/locale-data/fr';
-import enLocaleData from 'react-intl/locale-data/en';
-import tsLocaleData from 'react-intl/locale-data/ts';
-import frJson from './translations/fr.json';
-import enJson from './translations/en.json';
-import tsJson from './translations/pseudo.json';
- //import TableOfContents from './src/js/TableOfContents';
+import { IntlProvider } from 'react-intl';
+import InternationalSupport from './src/js/InternationalSupport';
 import ComponentOwner from './src/js/component-owner';
 import './main.scss';
 
-const translations = {
-  'fr': frJson,
-  'en': enJson,
-  'ts': tsJson
-};
 
-export default class TableOfContentsComponent {
+export default class TableOfContentsDemo {
   constructor(config) {
-    addLocaleData(frLocaleData);
-    addLocaleData(enLocaleData);
-    addLocaleData(tsLocaleData);
     this.init(config);
   }
 
   init(config) {
-    const locale = config.locale ? config.locale : 'en';
+    this.intlObj = new InternationalSupport(config.locale);
 
     ReactDOM.render(
-      <IntlProvider locale={locale} messages={translations[locale]}>
+      <IntlProvider locale={this.intlObj.getLocale()} messages={this.intlObj.getMessages()}>
         <ComponentOwner data={config} />
       </IntlProvider>,
       document.getElementById(config.elementId)
@@ -37,6 +23,6 @@ export default class TableOfContentsComponent {
   }
 }
 
-export TableOfContents from './src/js/TableOfContents';
+export TableOfContentsComponent from './src/js/TableOfContentsComponent';
 
-document.body.addEventListener('o.InitToc', e => new TableOfContentsComponent(e.detail));
+document.body.addEventListener('o.InitToc', e => new TableOfContentsDemo(e.detail));

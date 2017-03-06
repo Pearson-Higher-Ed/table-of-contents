@@ -4,7 +4,7 @@ import TreeView from './TreeView';
 
 class TableOfContents extends React.Component {
   constructor(props) {
-    super(props);   
+    super(props);
   }
 
   render() {

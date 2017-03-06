@@ -7,3 +7,4 @@ demo/elements.css
 npm-debug.log
 *.iml
 /.project
+translations/pseudo.json
