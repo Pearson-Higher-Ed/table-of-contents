@@ -23,6 +23,6 @@ export default class TableOfContentsDemo {
   }
 }
 
-export TableOfContentsComponent from './src/js/TableOfContentsComponent';
+export { TableOfContentsComponent } from './src/js/TableOfContentsComponent';
 
 document.body.addEventListener('o.InitToc', e => new TableOfContentsDemo(e.detail));
