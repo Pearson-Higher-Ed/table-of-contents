@@ -35,31 +35,31 @@ const iconButtonStyle = {
 export class TreeNode extends React.Component {
   constructor(props) {
     super(props);
-    
     this.state = {
       currentDepth: (this.props.currentDepth || 1),
       expanded: false,
       nexttab: false
-    };    
+    };
   }
-
   componentDidMount() {
     ReactDom.findDOMNode(this.list).setAttribute('listIndex', this.props.id);
     ReactDom.findDOMNode(this.list).setAttribute('tabIndex', '-1');
   }
 
   toggle() {
+    console.log('toggle');
     this.setState({expanded : !this.state.expanded});
   }
 
   handleLinkClick(pageId) {
+    console.log('link');
     this.props.tocClick(pageId);
   }
 
   isToggleAble() {
     const hasChildren = !! this.props.children.length;
     const currDepth = this.props.currentDepth;
-    const depth = this.props.depth;
+    const depth = this.props.data.depth;
     return (currDepth === 1 && (hasChildren || this.props.showDuplicateTitle) ||(currDepth !== 1 && currDepth < depth && hasChildren));
   }
 
@@ -70,7 +70,7 @@ export class TreeNode extends React.Component {
     return ((this.isToggleAble()) ? (this.state.expanded ? expandedClsStr : collapsedClsStr) : clsStr);
   }
 
-  handleKeyDown = (event) => {  
+  handleKeyDown = (event) => { 
     const current_toc = document.getElementsByClassName('toc-child');
     const last_element = current_toc[current_toc.length - 1];
     const current_ptoc = document.getElementsByClassName('toc-parent-content');
@@ -104,16 +104,16 @@ export class TreeNode extends React.Component {
     }
   }
 
-  renderClickIcon(formatMessage) {
+  renderClickIcon() {
     const classStr = this.getClassName();
     const depth = this.props.depth;
     const currDepth = this.props.currentDepth;
     const hasChildren = !!(this.props.children.length);
+    const { formatMessage } = this.props.intl;
 
     /*Logic to display toggle icon for first level headings and then depending on depth, show/hide the icon*/
     if (currDepth === 1 ||(currDepth !== 1 && currDepth < depth && hasChildren)) {
-      return(<IconButton role="button"
-        label = "Click"
+      return(<IconButton
         onClick= {this.toggle.bind(this)}
         className= {'icon '+ classStr}
         aria-controls= {this.props.node.id}
@@ -135,39 +135,34 @@ export class TreeNode extends React.Component {
     const currentDepth = this.props.currentDepth;
     const classStr = this.props.separateToggleIcon ? 'content' : this.getClassName();
     const doToggle = this.isToggleAble();
-    const { formatMessage } = this.props.intl; 
 
     if (depth > currentDepth) {
       nodes = this.props.children.map(function(n) {
         return <TreeNode key= {'display-'+n.id} intl= {self.props.intl} node= {n} children= {n.children || []} 
-        currentDepth= {currentDepth+1} data= {self.props.data} tocClick={self.props.tocClick}
-        drawerCallbacks = {self.props.drawerCallbacks} />
+        currentDepth= {currentDepth+1} data= {self.props.data} tocClick={self.props.tocClick} drawerCallbacks = {self.props.drawerCallbacks}/>
       });
-      //debugger;
       if (depth > currentDepth && this.props.data.showDuplicateTitle && (this.props.children.length || currentDepth === 1)) {
         //repeat the chapter title once again as a link to the respective content.
         nodes.unshift(
           <TreeNode key= {this.props.node.id} intl= {this.props.intl} node= {this.props.node} children= {[]} 
-          currentDepth= {currentDepth+1} data= {this.props.data} tocClick={self.props.tocClick}
-          drawerCallbacks = {self.props.drawerCallbacks} />
+          currentDepth= {currentDepth+1} data= {this.props.data} tocClick={self.props.tocClick} drawerCallbacks = {self.props.drawerCallbacks}/>
         )
       }
     }
 
     return (
-      <li className= {'list-group-item ' + (this.state.expanded ? 'selected': '') + (this.props.currentDepth > 1 ? ' toc-child' : ' toc-parent')}
-        onKeyDown={this.handleKeyDown}
-        ref={list => this.list = list}>
+  <li className= {'list-group-item ' + (this.state.expanded ? 'selected': '') + (this.props.currentDepth > 1 ? ' toc-child' : ' toc-parent')}
+          onKeyDown={this.handleKeyDown}
+          ref={list => this.list = list}>
         <a href= "javascript:void(0)"
           className= {classStr + (this.props.currentDepth > 1 ? ' toc-child-content' : ' toc-parent-content')}
           role= "button"
-          aria-controls= {this.props.node.id}
+          aria-controls= {this.props.node.urn}
           aria-expanded= {(doToggle ? (this.state.expanded ? true : false) : '')}
-          aria-label={this.props.node.title}
-          onClick= {((this.props.currentDepth > 1)  ? this.handleLinkClick.bind(self, this.props.node.id) : this.toggle.bind(this))}>
+          onClick= {((this.props.node.children && this.props.node.children.length > 0)  ? this.toggle.bind(this) : this.handleLinkClick.bind(this, this.props.node.urn))}>
           <span className= "title">{this.props.node.title}</span>
         </a>
-        {(this.props.separateToggleIcon ? this.renderClickIcon(formatMessage) : '')}
+        {(this.props.node.children && this.props.node.children.length > 0 ? this.renderClickIcon() : '')}
         {(() => {
           if (nodes.length) {
             return(<ul id={this.props.node.id} className={'child-list-group '+(this.state.expanded ? 'show' : 'hide')} aria-hidden={!this.state.expanded}>
@@ -183,6 +178,7 @@ export class TreeNode extends React.Component {
 class TreeView extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       list: this.props.data.content.list,
       currentDepth: 1
@@ -192,38 +188,27 @@ class TreeView extends React.Component {
   render() {
     const self = this;
     const list = this.state.list;
-    const field = this.props.childField || 'children';
-    if (this.props.data && this.props.data.content && this.props.data.content.list && this.props.data.content.list.length> 0) {
-      const nodes = list.map(function(n, i) {
-        return <TreeNode
-           separateToggleIcon={self.props.separateToggleIcon}
-           depth={self.props.depth}
-           key={n.id} id={i}
-           intl={self.props.intl}
-           node={n}
-           children={n[field] ? n[field] : []}
-           currentDepth= {self.state.currentDepth}
-           data={self.props.data}
-           tocClick={self.props.tocClick}
-           drawerCallbacks = {self.props.drawerCallbacks}
-        />
-      });
+    const field = this.props.data.childField || 'children';
 
-      return(
-        <ul className="list-group">
-             {nodes}
-        </ul>
-      );
-    }
-    else {
-      return(
-        <ul className="list-group">
-          <li className = {'list-group-item empty-message'}>
-            <p>There are no Table Of Contents to show</p>
-          </li>
-        </ul>
-      );
-    }
+    const nodes = list.map(function(n, i) {
+      return <TreeNode
+        separateToggleIcon={self.props.separateToggleIcon}
+        depth={self.props.depth}
+        key={n.id} id={i}
+        intl={self.props.intl}
+        node={n}
+        children={n[field] ? n[field] : []}
+        currentDepth= {self.state.currentDepth}
+        data={self.props.data}
+        tocClick={self.props.tocClick}
+        drawerCallbacks = {self.props.drawerCallbacks} />
+    });
+
+    return(
+      <ul className="list-group">
+           {nodes}
+      </ul>
+    );
   }
 }
 
@@ -236,7 +221,6 @@ TreeView.propTypes={
     content: PropTypes.object.isRequired
   }),
   drawerCallbacks: React.PropTypes.object
-  
 };
 
 export default TreeView;
