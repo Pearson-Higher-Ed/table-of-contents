@@ -12,10 +12,10 @@
     position: relative;
     padding-left:110px;
     margin-bottom:20px;
-    min-height: 78px;
+    min-height: 65px;
     background-position: 24px 0px;
     background-repeat: no-repeat;
-    background-size: 63px;
+    background-size: 63px 65px;
     .header-text{
       min-width: 250px;
       margin-right:20px;
@@ -64,10 +64,15 @@
       padding:20px 24px;
       color: #3e3e3e;
       width:87%;
-      span.title{
+      span.child{
         font-size: 16px;
-        font-weight: bold;
+        font-weight: normal;
       }
+      span.parent{
+          font-size: 16px;
+          font-weight: bold;
+          color: #3e3e3e;
+        }
     }
     &:hover {
       background-color: #F5F5F5;
@@ -91,11 +96,65 @@
     }
     li {
       a{
-        padding-left:45px;
-        span.title{
+        span.child{
+          &.depth1
+          {
+            padding-left:45px;
+          }
+          &.depth2
+          {
+            padding-left:45px;
+          }
+          &.depth3
+          {
+            padding-left:90px;
+          }
+          &.depth4
+          {
+            padding-left:135px;
+          }
+          &.depth5
+          {
+            padding-left:180px;
+          }
+          &.defaultDepth
+          {
+            padding-left:45px;
+          }
           font-size: 16px;
           font-weight: normal;
           color: #3e3e3e;
+          white-space: nowrap;
+        }
+        span.parent{
+          &.depth1
+          {
+            padding-left:45px;
+          }
+          &.depth2
+          {
+            padding-left:45px;
+          }
+          &.depth3
+          {
+            padding-left:90px;
+          }
+          &.depth4
+          {
+            padding-left:135px;
+          }
+          &.depth5
+          {
+            padding-left:180px;
+          }
+          &.defaultDepth
+          {
+            padding-left:45px;
+          }
+          font-size: 16px;
+          font-weight: bold;
+          color: #3e3e3e;
+          white-space: nowrap;
         }
         &:hover {
           color: #0d65a6;

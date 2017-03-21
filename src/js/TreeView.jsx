@@ -135,11 +135,13 @@ export class TreeNode extends React.Component {
     const currentDepth = this.props.currentDepth;
     const classStr = this.props.separateToggleIcon ? 'content' : this.getClassName();
     const doToggle = this.isToggleAble();
+    const field = 'children';
+    const hasChildren = !!(this.props.children.length);
 
     if (depth > currentDepth) {
       nodes = this.props.children.map(function(n) {
         return <TreeNode key= {'display-'+n.id} intl= {self.props.intl} node= {n} children= {n.children || []} 
-        currentDepth= {currentDepth+1} data= {self.props.data} tocClick={self.props.tocClick} drawerCallbacks = {self.props.drawerCallbacks}/>
+        currentDepth= {currentDepth+1} data= {self.props.data} tocClick={self.props.tocClick} drawerCallbacks = {self.props.drawerCallbacks} depth={self.props.depth} />
       });
       if (depth > currentDepth && this.props.data.showDuplicateTitle && (this.props.children.length || currentDepth === 1)) {
         //repeat the chapter title once again as a link to the respective content.
@@ -149,7 +151,15 @@ export class TreeNode extends React.Component {
         )
       }
     }
-
+    let contentClass;
+    if(currentDepth<=5)
+    {
+      contentClass = 'depth'+currentDepth;
+    }
+    else
+    {
+      contentClass = 'defaultDepth';
+    }
     return (
   <li className= {'list-group-item ' + (this.state.expanded ? 'selected': '') + (this.props.currentDepth > 1 ? ' toc-child' : ' toc-parent')}
           onKeyDown={this.handleKeyDown}
@@ -160,7 +170,7 @@ export class TreeNode extends React.Component {
           aria-controls= {this.props.node.urn}
           aria-expanded= {(doToggle ? (this.state.expanded ? true : false) : '')}
           onClick= {((this.props.node.children && this.props.node.children.length > 0)  ? this.toggle.bind(this) : this.handleLinkClick.bind(this, this.props.node.urn))}>
-          <span className= "title">{this.props.node.title}</span>
+          <span className= {(hasChildren ? ' parent '+contentClass : ' child '+contentClass)}>{this.props.node.title}</span>
         </a>
         {(this.props.node.children && this.props.node.children.length > 0 ? this.renderClickIcon() : '')}
         {(() => {
