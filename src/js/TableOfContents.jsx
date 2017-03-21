@@ -27,9 +27,9 @@ class TableOfContents extends React.Component {
           </div>
         </div>        
           <TreeView 
-            separateToggleIcon={this.props.separateToggleIcon} 
+            separateToggleIcon={this.props.data.separateToggleIcon} 
             data={this.props.data} 
-            depth={this.props.depth} 
+            depth={this.props.data.depth} 
             childField={this.props.childField}
             tocClick={this.props.clickTocHandler}
             drawerCallbacks = {this.props.drawerCallbacks}

@@ -106,7 +106,7 @@ export class TreeNode extends React.Component {
 
   renderClickIcon() {
     const classStr = this.getClassName();
-    const depth = this.props.depth;
+    const depth = this.props.data.depth;
     const currDepth = this.props.currentDepth;
     const hasChildren = !!(this.props.children.length);
     const { formatMessage } = this.props.intl;
@@ -130,22 +130,40 @@ export class TreeNode extends React.Component {
   render() {
     let nodes = [];
     const self = this;
-    const data = this.props.data;
     const depth = this.props.depth;
     const currentDepth = this.props.currentDepth;
     const classStr = this.props.separateToggleIcon ? 'content' : this.getClassName();
     const doToggle = this.isToggleAble();
+    const childField = this.props.childField;
 
     if (depth > currentDepth) {
       nodes = this.props.children.map(function(n) {
-        return <TreeNode key= {'display-'+n.id} intl= {self.props.intl} node= {n} children= {n.children || []} 
-        currentDepth= {currentDepth+1} data= {self.props.data} tocClick={self.props.tocClick} drawerCallbacks = {self.props.drawerCallbacks}/>
+        return <TreeNode 
+          key= {'display-'+n.id}
+          intl= {self.props.intl} 
+          node= {n}
+          children= {n.childField || []}
+          childField={childField}
+          currentDepth= {currentDepth+1}
+          data= {self.props.data}
+          tocClick={self.props.tocClick}
+          drawerCallbacks = {self.props.drawerCallbacks}
+        />
       });
       if (depth > currentDepth && this.props.data.showDuplicateTitle && (this.props.children.length || currentDepth === 1)) {
         //repeat the chapter title once again as a link to the respective content.
         nodes.unshift(
-          <TreeNode key= {this.props.node.id} intl= {this.props.intl} node= {this.props.node} children= {[]} 
-          currentDepth= {currentDepth+1} data= {this.props.data} tocClick={self.props.tocClick} drawerCallbacks = {self.props.drawerCallbacks}/>
+          <TreeNode 
+            key= {this.props.node.id}
+            intl= {this.props.intl}
+            node= {this.props.node}
+            children= {[]}
+            childField={childField}
+            currentDepth= {currentDepth+1}
+            data= {this.props.data}
+            tocClick={self.props.tocClick}
+            drawerCallbacks = {self.props.drawerCallbacks}
+          />
         )
       }
     }
@@ -159,10 +177,10 @@ export class TreeNode extends React.Component {
           role= "button"
           aria-controls= {this.props.node.urn}
           aria-expanded= {(doToggle ? (this.state.expanded ? true : false) : '')}
-          onClick= {((this.props.node.children && this.props.node.children.length > 0)  ? this.toggle.bind(this) : this.handleLinkClick.bind(this, this.props.node.urn))}>
+          onClick= {((this.props.node[childField] && this.props.node[childField].length > 0)  ? this.toggle.bind(this) : this.handleLinkClick.bind(this, this.props.node.urn))}>
           <span className= "title">{this.props.node.title}</span>
         </a>
-        {(this.props.node.children && this.props.node.children.length > 0 ? this.renderClickIcon() : '')}
+        {(this.props.node[childField] && this.props.node[childField].length > 0 ? this.renderClickIcon() : '')}
         {(() => {
           if (nodes.length) {
             return(<ul id={this.props.node.id} className={'child-list-group '+(this.state.expanded ? 'show' : 'hide')} aria-hidden={!this.state.expanded}>
@@ -198,6 +216,7 @@ class TreeView extends React.Component {
         intl={self.props.intl}
         node={n}
         children={n[field] ? n[field] : []}
+        childField={field}
         currentDepth= {self.state.currentDepth}
         data={self.props.data}
         tocClick={self.props.tocClick}
@@ -216,7 +235,7 @@ TreeView.propTypes={
   
   depth : PropTypes.number.isRequired,
   locale: PropTypes.string,
-  childField: PropTypes.string.isRequired,
+  childField: PropTypes.string,
   data: PropTypes.shape({
     content: PropTypes.object.isRequired
   }),
