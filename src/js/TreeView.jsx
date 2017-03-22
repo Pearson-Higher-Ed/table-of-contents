@@ -106,7 +106,7 @@ export class TreeNode extends React.Component {
 
   renderClickIcon() {
     const classStr = this.getClassName();
-    const depth = this.props.data.depth;
+    const depth = this.props.depth;
     const currDepth = this.props.currentDepth;
     const hasChildren = !!(this.props.children.length);
     const { formatMessage } = this.props.intl;
