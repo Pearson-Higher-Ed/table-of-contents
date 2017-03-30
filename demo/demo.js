@@ -67,7 +67,7 @@ function init() {
     alert();
   }
   const locale = getParam('lang') || 'en';
-  addLocaleData(localeData[locale]);
+  addLocaleData(localeData[locale.split('-')[0]]);
   // Demo eventing API
   document.body.dispatchEvent(new CustomEvent('o.InitToc', {
     detail: {

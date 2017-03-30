@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react';
+import { injectIntl } from 'react-intl';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { darkBlack, fullBlack } from 'material-ui/styles/colors';
-import TableOfContents from './TableOfContents';
+import { TableOfContentsComponent } from './TableOfContentsComponent';
 
 const muiTheme = getMuiTheme({
   palette: {    
@@ -26,7 +27,7 @@ class ComponentOwner extends React.Component {
     
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <TableOfContents separateToggleIcon={true} depth={5} data={this.props.data}/>
+        <TableOfContentsComponent separateToggleIcon={true} depth={5} data={this.props.data} locale={this.props.intl.locale} />
       </MuiThemeProvider>
     )
   }
@@ -36,4 +37,4 @@ ComponentOwner.childContextTypes = {
   muiTheme: PropTypes.object.isRequired
 };
 
-export default ComponentOwner; // Inject this.props.intl into the component context
+export default injectIntl(ComponentOwner); // Inject this.props.intl into the component context
