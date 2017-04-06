@@ -13,16 +13,10 @@ module.exports = {
     filename: 'build/[name].tree-view.js',
     libraryTarget: 'umd'
   },
-  plugins: [
-    new webpack.ProvidePlugin({
-      "window.pubsub": "pubsub"
-    })
-  ],
-  //contentBase: './demo', // for webpack dev server
   module: {
     preLoaders: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         loader: 'eslint',
         exclude: /node_modules/
       }
@@ -65,12 +59,13 @@ module.exports = {
         loader: 'file?name=build/fonts/[name].[ext]'
       },
       {
-       test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-       loader: 'url?mimetype=image/svg+xml'
-     }
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?mimetype=image/svg+xml'
+      }
     ]
   },
   resolve: {
     extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx']
-  }
+  },
+  devtool: 'source-map'
 };

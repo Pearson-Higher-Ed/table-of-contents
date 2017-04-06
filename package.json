@@ -1,6 +1,6 @@
 {
   "name": "@pearson-incubator/toc",
-  "version": "0.1.33",
+  "version": "0.1.35",
   "description": "TOC Component to render the table of contents of a book",
   "main": "./main.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "pretest": "npm run lint",
     "test": "mocha --compilers js:babel-register --require babel-polyfill --require intl --require test/utils/dom.js",
     "build": "webpack -p",
-    "lint": "eslint src/js/** demo/demo.js",
+    "lint": "eslint --ext .jsx,.js src demo/demo.js",
     "gen-changelog": "node ./npm_scripts/gen-changelog.js",
     "version": "npm run gen-changelog && git add CHANGELOG.md",
     "ci": "npm test && npm run build",
