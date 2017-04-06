@@ -64,9 +64,29 @@ export class TreeNode extends React.Component {
   }
 
   getClassName() {
-    const clsStr = 'content';
+    let clsStr = 'content';
+    switch (this.props.currentDepth) {
+    case 1:
+      clsStr =+ ' toc-parent-content'
+      break;
+    case 2:
+      clsStr = clsStr + ' toc-child-content'
+      break;
+    case 3:
+      clsStr = clsStr + ' toc-child-content third'
+      break;
+    case 4:
+      clsStr = clsStr + ' toc-child-content fourth'
+      break;
+    case 5:
+      clsStr = clsStr + ' toc-child-content fifth'
+      break;
+    default:
+      break;
+    }
     const expandedClsStr = clsStr + ' expanded';
     const collapsedClsStr = clsStr + ' collapsed';
+    
     return ((this.isToggleAble()) ? (this.state.expanded ? expandedClsStr : collapsedClsStr) : clsStr);
   }
 
@@ -142,9 +162,10 @@ export class TreeNode extends React.Component {
           key= {'display-'+n.id}
           intl= {self.props.intl} 
           node= {n}
-          children= {n.childField || []}
+          children= {n[childField] || []}
           childField={childField}
           currentDepth= {currentDepth+1}
+          depth={depth}
           data= {self.props.data}
           tocClick={self.props.tocClick}
           drawerCallbacks = {self.props.drawerCallbacks}
@@ -160,6 +181,7 @@ export class TreeNode extends React.Component {
             children= {[]}
             childField={childField}
             currentDepth= {currentDepth+1}
+            depth={depth}
             data= {this.props.data}
             tocClick={self.props.tocClick}
             drawerCallbacks = {self.props.drawerCallbacks}
@@ -173,7 +195,7 @@ export class TreeNode extends React.Component {
           onKeyDown={this.handleKeyDown}
           ref={list => this.list = list}>
         <a href= "javascript:void(0)"
-          className= {classStr + (this.props.currentDepth > 1 ? ' toc-child-content' : ' toc-parent-content')}
+          className= {classStr}
           role= "button"
           aria-controls= {this.props.node.urn}
           aria-expanded= {(doToggle ? (this.state.expanded ? true : false) : '')}
@@ -205,8 +227,8 @@ class TreeView extends React.Component {
 
   render() {
     const self = this;
-    const list = this.state.list;
-    const field = this.props.data.childField || 'children';
+    const list = self.state.list;
+    const field = self.props.data.childField || 'children';
 
     const nodes = list.map(function(n, i) {
       return <TreeNode
@@ -222,7 +244,6 @@ class TreeView extends React.Component {
         tocClick={self.props.tocClick}
         drawerCallbacks = {self.props.drawerCallbacks} />
     });
-
     return(
       <ul className="list-group">
            {nodes}
