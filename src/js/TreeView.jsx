@@ -8,6 +8,7 @@
 import React, { PropTypes } from 'react';
 import { messages } from './defaultMessages';
 import ReactDom from 'react-dom';
+import { AnalyticsManager } from '@pearson-incubator/aquila-js-core';
 import IconButton from 'material-ui/IconButton'
 import SvgIcon from 'material-ui/SvgIcon'
 
@@ -52,8 +53,12 @@ export class TreeNode extends React.Component {
   }
 
   handleLinkClick(pageId) {
-    console.log('link');
     this.props.tocClick(pageId);
+    AnalyticsManager.dispatch({
+      category: 'Toc',
+      action: 'Click',
+      label: pageId
+    });
   }
 
   isToggleAble() {

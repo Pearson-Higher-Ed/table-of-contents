@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "react-intl": "~2.0.1",
-    "@pearson-incubator/aquila-js-core": "^0.2.32"
+    "@pearson-incubator/aquila-js-core": "^0.2.34"
   },
   "devDependencies": {
     "babel-core": "~6.3.17",
