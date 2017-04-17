@@ -205,7 +205,7 @@ export class TreeNode extends React.Component {
           aria-controls= {this.props.node.urn}
           aria-expanded= {(doToggle ? (this.state.expanded ? true : false) : '')}
           onClick= {((this.props.node[childField] && this.props.node[childField].length > 0)  ? this.toggle.bind(this) : this.handleLinkClick.bind(this, this.props.node.urn))}>
-          <span className= "title">{this.props.node.title}</span>
+          <span className= "title">{this.props.node.title ? this.props.node.title : this.props.node.label}</span>
         </a>
         {(this.props.node[childField] && this.props.node[childField].length > 0 ? this.renderClickIcon() : '')}
         {(() => {
@@ -233,7 +233,7 @@ class TreeView extends React.Component {
   render() {
     const self = this;
     const list = self.state.list;
-    const field = self.props.data.childField || 'children';
+    const field = self.props.childField || 'children';
 
     const nodes = list.map(function(n, i) {
       return <TreeNode
