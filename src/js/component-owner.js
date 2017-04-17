@@ -27,7 +27,8 @@ class ComponentOwner extends React.Component {
     
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <TableOfContentsComponent separateToggleIcon={true} depth={5} data={this.props.data} locale={this.props.intl.locale} />
+        <TableOfContentsComponent childField={this.props.data.childField} separateToggleIcon={true} depth={5} data={this.props.data} 
+        locale={this.props.intl.locale} />
       </MuiThemeProvider>
     )
   }
