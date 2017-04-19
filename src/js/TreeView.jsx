@@ -29,8 +29,9 @@ const btnStyle = {
   height: '9px'
 }
 const iconButtonStyle = {
-  paddingTop: '20px',
-  float: 'right'
+  padding: '0px',
+  float: 'right',
+  margin: '7px 0 0 0'
 }
 
 export class TreeNode extends React.Component {
@@ -48,7 +49,6 @@ export class TreeNode extends React.Component {
   }
 
   toggle() {
-    console.log('toggle');
     this.setState({expanded : !this.state.expanded});
   }
 
@@ -146,7 +146,7 @@ export class TreeNode extends React.Component {
         aria-label={(this.state.expanded ? formatMessage(messages.expandedList) : formatMessage(messages.collapsedList))}
         iconStyle={btnStyle}
         style={iconButtonStyle}
-      >{this.state.expanded ? <CollapseBtn viewBox="368 33 16 9" />: <ExpandBtn viewBox="0 0 16 9" />}</IconButton>)
+      >{this.state.expanded ? <CollapseBtn viewBox="368 33 16 9" />: <ExpandBtn viewBox="0 0 13 9" />}</IconButton>)
     }else {
       return null;
     }
@@ -199,14 +199,14 @@ export class TreeNode extends React.Component {
   <li className= {'list-group-item ' + (this.state.expanded ? 'selected': '') + (this.props.currentDepth > 1 ? ' toc-child' : ' toc-parent')}
           onKeyDown={this.handleKeyDown}
           ref={list => this.list = list}>
-        <a href= "javascript:void(0)"
+        <span href= "javascript:void(0)"
           className= {classStr}
           role= "button"
           aria-controls= {this.props.node.urn}
           aria-expanded= {(doToggle ? (this.state.expanded ? true : false) : '')}
           onClick= {((this.props.node[childField] && this.props.node[childField].length > 0 && currentDepth === 1)  ? this.toggle.bind(this) : this.handleLinkClick.bind(this, this.props.node.urn))}>
-          <span className= "title">{this.props.node.title ? this.props.node.title : this.props.node.label}</span>
-        </a>
+          <label className= "title">{this.props.node.title ? this.props.node.title : this.props.node.label}</label>
+        </span>
         {(this.props.node[childField] && this.props.node[childField].length > 0 ? this.renderClickIcon() : '')}
         {(() => {
           if (nodes.length) {
