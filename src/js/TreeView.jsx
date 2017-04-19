@@ -199,14 +199,14 @@ export class TreeNode extends React.Component {
   <li className= {'list-group-item ' + (this.state.expanded ? 'selected': '') + (this.props.currentDepth > 1 ? ' toc-child' : ' toc-parent')}
           onKeyDown={this.handleKeyDown}
           ref={list => this.list = list}>
-        <span href= "javascript:void(0)"
+        <a href= "javascript:void(0)"
           className= {classStr}
           role= "button"
           aria-controls= {this.props.node.urn}
           aria-expanded= {(doToggle ? (this.state.expanded ? true : false) : '')}
           onClick= {((this.props.node[childField] && this.props.node[childField].length > 0 && currentDepth === 1)  ? this.toggle.bind(this) : this.handleLinkClick.bind(this, this.props.node.urn))}>
           <label className= "title">{this.props.node.title ? this.props.node.title : this.props.node.label}</label>
-        </span>
+        </a>
         {(this.props.node[childField] && this.props.node[childField].length > 0 ? this.renderClickIcon() : '')}
         {(() => {
           if (nodes.length) {
