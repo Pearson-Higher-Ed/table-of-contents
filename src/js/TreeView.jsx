@@ -39,7 +39,8 @@ export class TreeNode extends React.Component {
     this.state = {
       currentDepth: (this.props.currentDepth || 1),
       expanded: false,
-      nexttab: false
+      nexttab: false,
+      treeExapand: {}
     };
   }
   componentDidMount() {
@@ -47,9 +48,14 @@ export class TreeNode extends React.Component {
     ReactDom.findDOMNode(this.list).setAttribute('tabIndex', '-1');
   }
 
-  toggle() {
-    console.log('toggle');
-    this.setState({expanded : !this.state.expanded});
+  toggle(current_index) {
+    const treeExapandObj = this.state.treeExapand;
+    if (this.state.treeExapand[current_index] !== true) {
+      treeExapandObj[current_index] = true;
+    } else {
+      treeExapandObj[current_index] = false;
+    }
+    this.setState({ treeExapand: treeExapandObj });
   }
 
   handleLinkClick(pageId) {
@@ -96,7 +102,7 @@ export class TreeNode extends React.Component {
   }
 
   handleKeyDown = (event) => { 
-    const current_toc = document.getElementsByClassName('toc-child');
+    const current_toc = document.getElementsByClassName('list-group-item');
     const last_element = current_toc[current_toc.length - 1];
     const current_ptoc = document.getElementsByClassName('toc-parent-content');
     console.log('current parent length:', current_ptoc.length);
@@ -120,12 +126,10 @@ export class TreeNode extends React.Component {
       }
     }
     if ( event.target.parentNode === last_element ) {
-      this.props.drawerCallbacks.onActive('bookmarks');
-      this.props.drawerCallbacks.changeState(1);
-    }
-    if ((event.which === 13 || event.keyCode === 13)) {
-      // ((doToggle && !this.props.separateToggleIcon)  ? this.toggle.bind(this) : this.handleLinkClick.bind(self, this.props.node.id));
-      this.toggle();
+      if ((event.which === 40 || event.keyCode === 40)) {
+        this.props.drawerCallbacks.onActive('bookmarks');
+        this.props.drawerCallbacks.changeState(1);
+      }
     }
   }
 
@@ -139,7 +143,6 @@ export class TreeNode extends React.Component {
     /*Logic to display toggle icon for first level headings and then depending on depth, show/hide the icon*/
     if (currDepth === 1 ||(currDepth !== 1 && currDepth < depth && hasChildren)) {
       return(<IconButton
-        onClick= {this.toggle.bind(this)}
         className= {'icon '+ classStr}
         aria-controls= {this.props.node.id}
         aria-expanded= {this.state.expanded}
@@ -158,11 +161,11 @@ export class TreeNode extends React.Component {
     const depth = this.props.depth;
     const currentDepth = this.props.currentDepth;
     const classStr = this.props.separateToggleIcon ? 'content' : this.getClassName();
-    const doToggle = this.isToggleAble();
+    //const doToggle = this.isToggleAble();  /* Future Purpose */
     const childField = this.props.childField;
 
     if (depth > currentDepth) {
-      nodes = this.props.children.map(function(n) {
+      nodes = this.props.children.map(function(n, index) {
         return <TreeNode 
           key= {'display-'+n.id}
           intl= {self.props.intl} 
@@ -174,6 +177,7 @@ export class TreeNode extends React.Component {
           data= {self.props.data}
           tocClick={self.props.tocClick}
           drawerCallbacks = {self.props.drawerCallbacks}
+    id={`nodeidx_${index}_${n.label}`}
         />
       });
       if (depth > currentDepth && this.props.data.showDuplicateTitle && (this.props.children.length || currentDepth === 1)) {
@@ -196,21 +200,29 @@ export class TreeNode extends React.Component {
     }
 
     return (
-  <li className= {'list-group-item ' + (this.state.expanded ? 'selected': '') + (this.props.currentDepth > 1 ? ' toc-child' : ' toc-parent')}
-          onKeyDown={this.handleKeyDown}
-          ref={list => this.list = list}>
-        <a href= "javascript:void(0)"
-          className= {classStr}
-          role= "button"
-          aria-controls= {this.props.node.urn}
-          aria-expanded= {(doToggle ? (this.state.expanded ? true : false) : '')}
-          onClick= {((this.props.node[childField] && this.props.node[childField].length > 0)  ? this.toggle.bind(this) : this.handleLinkClick.bind(this, this.props.node.urn))}>
-          <span className= "title">{this.props.node.title ? this.props.node.title : this.props.node.label}</span>
+      <li
+        className={`list-group-item ${this.state.treeExapand[this.props.id] ? 'selected' : ''}${this.props.currentDepth > 1 ? ' toc-child' : ' toc-parent'}`}
+        onKeyDown={this.handleKeyDown}
+        ref={list => this.list = list}
+        data-index={this.props.id}
+        data-child={nodes.length}
+        data-urn={this.props.node.urn}
+      >
+        <a
+          href="javascript:void(0)"
+          className={classStr}
+          role="button"
+          aria-controls={this.props.node.urn}
+          aria-expanded={((nodes.length) ? (!!this.state.treeExapand[this.props.id]) : '')}
+          onClick={((nodes.length > 0) ? this.toggle.bind(this, this.props.id) : this.handleLinkClick.bind(this, this.props.node.urn))}
+        >
+          <span className="title">{this.props.node.title ? this.props.node.title : this.props.node.label}</span>
+          {(this.props.node[childField] && this.props.node[childField].length > 0 ? this.renderClickIcon() : '')}
         </a>
-        {(this.props.node[childField] && this.props.node[childField].length > 0 ? this.renderClickIcon() : '')}
+
         {(() => {
           if (nodes.length) {
-            return(<ul id={this.props.node.id} className={'child-list-group '+(this.state.expanded ? 'show' : 'hide')} aria-hidden={!this.state.expanded}>
+            return (<ul id={this.props.node.id} className={`child-list-group ${this.state.treeExapand[this.props.id] ? 'show' : 'hide'}`} aria-hidden={!this.state.treeExapand[this.props.id]}>
               {nodes}
             </ul>)
           }
