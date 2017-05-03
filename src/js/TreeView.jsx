@@ -48,8 +48,7 @@ export class TreeNode extends React.Component {
   }
 
   toggle() {
-    const expandRef = ReactDom.findDOMNode(this.expandRef).getAttribute('aria-expanded') === 'false';
-    this.setState({ expanded: expandRef });
+    this.setState({ expanded: !this.state.expanded });
   }
 
   handleLinkClick(pageId) {
@@ -190,7 +189,6 @@ export class TreeNode extends React.Component {
         <a
           href="javascript:void(0)"
           className={classStr}
-          ref={(expandRef) => { this.expandRef = expandRef; }}
           role="button"
           aria-controls={this.props.node.urn}
           aria-expanded={this.state.expanded}
