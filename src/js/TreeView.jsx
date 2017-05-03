@@ -38,9 +38,8 @@ export class TreeNode extends React.Component {
     super(props);
     this.state = {
       currentDepth: (this.props.currentDepth || 1),
-      expanded: false,
       nexttab: false,
-      treeExapand: {}
+      treeExpand: {}
     };
   }
   componentDidMount() {
@@ -49,13 +48,13 @@ export class TreeNode extends React.Component {
   }
 
   toggle(current_index) {
-    const treeExapandObj = this.state.treeExapand;
-    if (this.state.treeExapand[current_index] !== true) {
-      treeExapandObj[current_index] = true;
+    const treeExpandObj = this.state.treeExpand;
+    if (this.state.treeExpand[current_index] !== true) {
+      treeExpandObj[current_index] = true;
     } else {
-      treeExapandObj[current_index] = false;
+      treeExpandObj[current_index] = false;
     }
-    this.setState({ treeExapand: treeExapandObj });
+    this.setState({ treeExpand: treeExpandObj });
   }
 
   handleLinkClick(pageId) {
@@ -67,14 +66,7 @@ export class TreeNode extends React.Component {
     });
   }
 
-  isToggleAble() {
-    const hasChildren = !! this.props.children.length;
-    const currDepth = this.props.currentDepth;
-    const depth = this.props.data.depth;
-    return (currDepth === 1 && (hasChildren || this.props.showDuplicateTitle) ||(currDepth !== 1 && currDepth < depth && hasChildren));
-  }
-
-  getClassName() {
+  getClassName(currentIndex, nodeLength) {
     let clsStr = 'content';
     switch (this.props.currentDepth) {
     case 1:
@@ -97,8 +89,7 @@ export class TreeNode extends React.Component {
     }
     const expandedClsStr = clsStr + ' expanded';
     const collapsedClsStr = clsStr + ' collapsed';
-    
-    return ((this.isToggleAble()) ? (this.state.expanded ? expandedClsStr : collapsedClsStr) : clsStr);
+    return ((nodeLength > 0) ? (this.state.treeExpand[currentIndex] ? expandedClsStr : collapsedClsStr) : clsStr);
   }
 
   handleKeyDown = (event) => { 
@@ -125,7 +116,7 @@ export class TreeNode extends React.Component {
         }
       }
     }
-    if ( event.target.parentNode === last_element ) {
+    if (event.target.parentNode === last_element) {
       if ((event.which === 40 || event.keyCode === 40)) {
         this.props.drawerCallbacks.onActive('bookmarks');
         this.props.drawerCallbacks.changeState(1);
@@ -133,8 +124,7 @@ export class TreeNode extends React.Component {
     }
   }
 
-  renderClickIcon() {
-    const classStr = this.getClassName();
+  renderClickIcon(currentIndex, classStr) {
     const depth = this.props.depth;
     const currDepth = this.props.currentDepth;
     const hasChildren = !!(this.props.children.length);
@@ -145,11 +135,11 @@ export class TreeNode extends React.Component {
       return(<IconButton
         className= {'icon '+ classStr}
         aria-controls= {this.props.node.id}
-        aria-expanded= {this.state.expanded}
-        aria-label={(this.state.expanded ? formatMessage(messages.expandedList) : formatMessage(messages.collapsedList))}
+        aria-expanded= {this.state.treeExpand[currentIndex]}
+        aria-label={(this.state.treeExpand[currentIndex] ? formatMessage(messages.expandedList) : formatMessage(messages.collapsedList))}
         iconStyle={btnStyle}
         style={iconButtonStyle}
-      >{this.state.expanded ? <CollapseBtn viewBox="368 33 16 9" />: <ExpandBtn viewBox="0 0 13 9" />}</IconButton>)
+      >{this.state.treeExpand[currentIndex] ? <CollapseBtn viewBox="368 33 16 9" />: <ExpandBtn viewBox="0 0 13 9" />}</IconButton>)
     }else {
       return null;
     }
@@ -160,8 +150,6 @@ export class TreeNode extends React.Component {
     const self = this;
     const depth = this.props.depth;
     const currentDepth = this.props.currentDepth;
-    const classStr = this.props.separateToggleIcon ? 'content' : this.getClassName();
-    //const doToggle = this.isToggleAble();  /* Future Purpose */
     const childField = this.props.childField;
 
     if (depth > currentDepth) {
@@ -177,7 +165,7 @@ export class TreeNode extends React.Component {
           data= {self.props.data}
           tocClick={self.props.tocClick}
           drawerCallbacks = {self.props.drawerCallbacks}
-    id={`nodeidx_${index}_${n.label}`}
+        id={`nodeidx_${index}_${n.label}`}
         />
       });
       if (depth > currentDepth && this.props.data.showDuplicateTitle && (this.props.children.length || currentDepth === 1)) {
@@ -198,10 +186,10 @@ export class TreeNode extends React.Component {
         )
       }
     }
-
+    const classStr = this.props.separateToggleIcon ? 'content' : this.getClassName(this.props.id, nodes.length);
     return (
       <li
-        className={`list-group-item ${this.state.treeExapand[this.props.id] ? 'selected' : ''}${this.props.currentDepth > 1 ? ' toc-child' : ' toc-parent'}`}
+        className={`list-group-item ${this.state.treeExpand[this.props.id] ? 'selected' : ''}${this.props.currentDepth > 1 ? ' toc-child' : ' toc-parent'}`}
         onKeyDown={this.handleKeyDown}
         ref={list => this.list = list}
         data-index={this.props.id}
@@ -213,16 +201,16 @@ export class TreeNode extends React.Component {
           className={classStr}
           role="button"
           aria-controls={this.props.node.urn}
-          aria-expanded={((nodes.length) ? (!!this.state.treeExapand[this.props.id]) : '')}
+          aria-expanded={((nodes.length) ? (!!this.state.treeExpand[this.props.id]) : '')}
           onClick={((nodes.length > 0) ? this.toggle.bind(this, this.props.id) : this.handleLinkClick.bind(this, this.props.node.urn))}
         >
           <span className="title">{this.props.node.title ? this.props.node.title : this.props.node.label}</span>
-          {(this.props.node[childField] && this.props.node[childField].length > 0 ? this.renderClickIcon() : '')}
+          {(this.props.node[childField] && this.props.node[childField].length > 0 ? this.renderClickIcon(this.props.id, classStr) : '')}
         </a>
 
         {(() => {
           if (nodes.length) {
-            return (<ul id={this.props.node.id} className={`child-list-group ${this.state.treeExapand[this.props.id] ? 'show' : 'hide'}`} aria-hidden={!this.state.treeExapand[this.props.id]}>
+            return (<ul id={this.props.node.id} className={`child-list-group ${this.state.treeExpand[this.props.id] ? 'show' : 'hide'}`} aria-hidden={!this.state.treeExpand[this.props.id]}>
               {nodes}
             </ul>)
           }
