@@ -16,6 +16,6 @@ export const TableOfContentsComponent = function TableOfContentsComponent(params
       clickTocHandler={paramsObj.clickTocHandler}
       drawerCallbacks={paramsObj.drawerCallbacks} />
   </IntlProvider>)
-}
+};
 
 

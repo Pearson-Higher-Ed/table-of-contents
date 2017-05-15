@@ -38,7 +38,7 @@ class TableOfContents extends React.Component {
       </div>
     )
   }
-};
+}
 
 TableOfContents.propTypes = {
   drawerCallbacks: React.PropTypes.object

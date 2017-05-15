@@ -5,7 +5,8 @@
  * @type {boolean} separateToggleIcon - optional param to make the toggle icon separate from the content.
  */
 
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { messages } from './defaultMessages';
 import ReactDom from 'react-dom';
 import { AnalyticsManager } from '@pearson-incubator/aquila-js-core';
