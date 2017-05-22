@@ -24,22 +24,22 @@ describe('TreeView', () => {
         'id':'p-1',
         'href': 'OPS/xhtml/file_0003.html',
         'title': 'Parent-1',
-        children:[
+        childNodes:[
           {
             'id':'c-1',
             'href': 'OPS/xhtml/file_0003_1.html',
             'title': 'child-1',
-            children:[
+            childNodes:[
               {
                 'id':'c-1-1',
                 'href': 'OPS/xhtml/file_0003_1-1.html',
                 'title': 'grandchild-1',
-                children:[
+                childNodes:[
                   {
                     'id':'c-1-1-1',
                     'href': 'OPS/xhtml/file_0003_1-1-1.html',
                     'title': 'great-grandchild-1',
-                    children:[
+                    childNodes:[
                       {
                         'id':'c-1-1-1-1',
                         'href': 'OPS/xhtml/file_0003_1-1-1-1.html',
@@ -61,7 +61,7 @@ describe('TreeView', () => {
         'id':'p-2',
         'href': 'OPS/xhtml/file_0005.html',
         'title': 'Parent-2',
-        children:[]
+        childNodes:[]
       }]
   };
 
@@ -100,6 +100,6 @@ describe('TreeView', () => {
     let result = renderer.getRenderOutput();
     expect(result.type).toEqual('ul');
     expect(result.props.className).toEqual('list-group');
-    expect(result.props.children.length).toEqual(2);
+    expect(result.props.childNodes.length).toEqual( 2);
   });
 });
