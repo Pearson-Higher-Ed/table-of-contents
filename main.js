@@ -19,7 +19,8 @@ export default class TableOfContentsDemo {
       <IntlProvider locale={this.intlObj.getLocale()} messages={this.intlObj.getMessages()}>
         <ComponentOwner
           data={config}
-          locale={config.locale}/>
+          locale={config.locale}
+        />
       </IntlProvider>,
       document.getElementById(config.elementId)
     );
