@@ -191,6 +191,7 @@ export default class TreeNode extends React.Component {
         nodes.unshift(
           <TreeNode
             key={this.props.node.id}
+            id={this.props.node.id}
             intl={this.props.intl}
             node={this.props.node}
             childNodes={[]}
