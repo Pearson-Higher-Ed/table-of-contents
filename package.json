@@ -20,7 +20,7 @@
     "pseudoloc": "./node_modules/pseudoloc/bin/pseudoloc --readFile ./translations/en.json --writeFile ./translations/pseudo.json"
   },
   "author": "Dhanya Menon",
-  "license": "MIT",
+  "license": "PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA",
   "repository": {
     "type": "git",
     "url": "https://github.com/Pearson-Higher-Ed/"
