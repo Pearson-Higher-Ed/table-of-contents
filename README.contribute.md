@@ -131,3 +131,11 @@ To take advantage of source maps, you must enable JavaScript source maps in your
 
 Optionally, install [React developer tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
 for additional React debugging support in Chrome dev tools under the "React" tab.
+
+
+## License 
+
+***************************************************************
+PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA
+***************************************************************
+
