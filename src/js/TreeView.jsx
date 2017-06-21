@@ -36,6 +36,13 @@ export default class TreeView extends React.Component {
   render() {
     const list = this.state.list;
     const field = this.props.childField || 'childNodes';
+    let reqChapterId = '';
+    list.forEach((chapter) => {
+      const reqChapter = chapter[field] ? chapter[field].find(page => page.urn === this.props.currentPageId) : {};
+      if (reqChapter && Object.keys(reqChapter).length !== 0) {
+        reqChapterId = chapter.urn;
+      }
+    });
     const nodes = list.map(n => (
       <TreeNode
         separateToggleIcon={this.props.separateToggleIcon}
@@ -50,6 +57,8 @@ export default class TreeView extends React.Component {
         data={this.props.data}
         tocClick={this.props.tocClick}
         drawerCallbacks={this.props.drawerCallbacks}
+        currentPageId={this.props.currentPageId}
+        currentChapterId={reqChapterId}
       />)
     );
     return (
@@ -70,9 +79,11 @@ TreeView.propTypes = {
   }).isRequired,
   drawerCallbacks: PropTypes.object.isRequired,
   tocClick: PropTypes.func.isRequired,
-  separateToggleIcon: PropTypes.bool
+  separateToggleIcon: PropTypes.bool,
+  currentPageId: PropTypes.string
 };
 
 TreeView.defaultProps = {
-  separateToggleIcon: false
+  separateToggleIcon: false,
+  currentPageId: ''
 };

@@ -30,7 +30,7 @@ class TableOfContents extends React.PureComponent {
 
     return (
       <div id="toc">
-        <div className="toc-wrapper">
+        {this.props.isTocWrapperRequired && <div className="toc-wrapper">
           <div className="toc-header" style={style}>
             <div className="header-text">
               <h2 className="header-title">{
@@ -42,6 +42,7 @@ class TableOfContents extends React.PureComponent {
             </div>
           </div>
         </div>
+        }
         <TreeView
           separateToggleIcon={this.props.separateToggleIcon}
           data={this.props.data}
@@ -50,6 +51,7 @@ class TableOfContents extends React.PureComponent {
           tocClick={this.props.clickTocHandler}
           drawerCallbacks={this.props.drawerCallbacks}
           intl={this.props.intl}
+          currentPageId={this.props.currentPageId}
         />
       </div>
     );
@@ -63,7 +65,14 @@ TableOfContents.propTypes = {
   depth: PropTypes.number.isRequired,
   clickTocHandler: PropTypes.func.isRequired,
   separateToggleIcon: PropTypes.bool.isRequired,
-  intl: PropTypes.object.isRequired
+  intl: PropTypes.object.isRequired,
+  isTocWrapperRequired: PropTypes.bool,
+  currentPageId: PropTypes.string
+};
+
+TableOfContents.defaultProps = {
+  isTocWrapperRequired: true,
+  currentPageId: ''
 };
 
 export default injectIntl(TableOfContents);

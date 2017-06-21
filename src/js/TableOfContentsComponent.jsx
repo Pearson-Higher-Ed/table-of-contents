@@ -30,6 +30,8 @@ export const TableOfContentsComponent = function TableOfContentsComponent(params
         childField={paramsObj.childField}
         clickTocHandler={paramsObj.clickTocHandler}
         drawerCallbacks={paramsObj.drawerCallbacks}
+        isTocWrapperRequired={paramsObj.isTocWrapperRequired}
+        currentPageId={paramsObj.currentPageId}
       />
     </IntlProvider>
   );

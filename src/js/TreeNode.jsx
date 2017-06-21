@@ -100,7 +100,7 @@ export default class TreeNode extends React.Component {
     }
   }
 
-  getClassName(nodeLength) {
+  getClassName(nodeLength, currentPageId, nodeUrn) {
     let clsStr = 'content';
     switch (this.props.currentDepth) {
       case 1:
@@ -121,7 +121,20 @@ export default class TreeNode extends React.Component {
       default:
         break;
     }
+    clsStr = currentPageId === nodeUrn ? `${clsStr} selectedPage` : clsStr;
     return `${clsStr} ${(nodeLength > 0 && this.state.expanded) ? 'expanded' : 'collapsed'}`;
+  }
+
+  getParentClass = (currentChapterId, nodeUrn, currentDepth, currentPageId) => {
+    let classStr = 'list-group-item';
+    let ChapterId = currentChapterId;
+    if (currentPageId.toLowerCase() === 'glossary' || currentPageId.toLowerCase() === 'footnotes') {
+      ChapterId = currentPageId;
+    }
+    classStr = ChapterId === nodeUrn ? `${classStr} selectedChapter` : classStr;
+    classStr = currentDepth > 1 ? `${classStr} toc-child` : `${classStr} toc-parent`;
+
+    return classStr;
   }
 
   handleKeyDown = (event) => {
@@ -194,6 +207,8 @@ export default class TreeNode extends React.Component {
           tocClick={self.props.tocClick}
           drawerCallbacks={self.props.drawerCallbacks}
           id={`nodeidx_${index}_${n.label}`}
+          currentPageId={self.props.currentPageId}
+          currentChapterId={self.props.currentChapterId}
         />
       ));
       if (
@@ -215,18 +230,19 @@ export default class TreeNode extends React.Component {
             data={this.props.data}
             tocClick={self.props.tocClick}
             drawerCallbacks={self.props.drawerCallbacks}
+            currentPageId={self.props.currentPageId}
+            currentChapterId={self.props.currentChapterId}
           />
         );
       }
     }
-    const classStr = this.props.separateToggleIcon ? 'content' : this.getClassName(nodes.length);
+    const classStr = this.props.separateToggleIcon ? 'content' :
+    this.getClassName(nodes.length, this.props.currentPageId, this.props.node.urn);
+    const parentClass = this.getParentClass(this.props.currentChapterId, this.props.node.urn,
+      this.props.currentDepth, this.props.currentPageId);
     return (
       <li
-        className={
-          `list-group-item
-          ${this.state.expanded ? 'selected' : ''}
-          ${this.props.currentDepth > 1 ? ' toc-child' : ' toc-parent'}`
-        }
+        className={parentClass}
         role="presentation"
         onKeyDown={this.handleKeyDown}
         ref={(list) => { this.list = list; }}
@@ -288,5 +304,11 @@ TreeNode.propTypes = {
   tocClick: PropTypes.func.isRequired,
   depth: PropTypes.number.isRequired,
   currentDepth: PropTypes.number.isRequired,
-  childField: PropTypes.string
+  childField: PropTypes.string,
+  currentPageId: PropTypes.string,
+  currentChapterId: PropTypes.string
+};
+TreeNode.defaultProps = {
+  currentPageId: '',
+  currentChapterId: ''
 };
