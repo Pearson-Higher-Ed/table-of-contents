@@ -23,26 +23,31 @@ function init() {
     id: 'p-1',
     href: 'OPS/xhtml/file_0003.html',
     title: 'Parent-1',
+    urn: 'p-1',
     items: [
       {
         id: 'c-1',
         href: 'OPS/xhtml/file_0003_1.html',
-        title: 'child-1',
+        title: 'Child-1',
+        urn: 'c-1',
         items: [
           {
             id: 'c-1-1',
             href: 'OPS/xhtml/file_0003_1-1.html',
             title: 'grandchild-1',
+            urn: 'c-1-1',
             items: [
               {
                 id: 'c-1-1-1',
                 href: 'OPS/xhtml/file_0003_1-1-1.html',
                 title: 'great-grandchild-1',
+                urn: 'c-1-1-1',
                 items: [
                   {
                     id: 'c-1-1-1-1',
                     href: 'OPS/xhtml/file_0003_1-1-1-1.html',
-                    title: 'great-great-grandchild-1'
+                    title: 'great-great-grandchild-1',
+                    urn: 'c-1-1-1-1'
                   }
                 ]
               }
@@ -53,13 +58,15 @@ function init() {
       {
         id: 'c-2',
         href: 'OPS/xhtml/file_0003_2.html',
-        title: 'Child-2'
+        title: 'Child-2',
+        urn: 'c-2'
       }
     ]
   }, {
     id: 'p-2',
     href: 'OPS/xhtml/file_0005.html',
     title: 'Parent-2',
+    urn: 'p-2',
     items: []
   }];
 
@@ -88,7 +95,8 @@ function init() {
         changeState: clickHandler,
         onActive: clickHandler
       },
-      clickTocHandler: clickHandler
+      clickTocHandler: clickHandler,
+      currentPageId: 'c-1'
     }
   }));
 }

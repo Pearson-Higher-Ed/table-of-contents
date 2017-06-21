@@ -20,6 +20,8 @@ export default class TableOfContentsDemo {
         <ComponentOwner
           data={config}
           locale={config.locale}
+          isTocWrapperRequired={config.isTocWrapperRequired}
+          currentPageId={config.currentPageId}
         />
       </IntlProvider>,
       document.getElementById(config.elementId)

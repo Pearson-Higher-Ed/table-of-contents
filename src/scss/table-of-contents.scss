@@ -56,7 +56,6 @@ PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA
     margin: 0;
     padding:0;
     list-style-type: none;
-    border-top:1px solid #c7c7c7;
     &.show{
       display: block;
     }
@@ -71,16 +70,19 @@ PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA
 
   .list-group-item {
     display: block;
-    border-bottom: 1px solid #c7c7c7;
+    border-bottom: 2px solid #f5f5f5;
     background-color: #fff;
+    &.selectedChapter a span.title{
+      font-weight: bold;
+    }
     a {
       text-decoration: none;
-      padding:20px 24px;
+      padding:30px 24px;
       color: #3e3e3e;
       width: 100%;
+      cursor: pointer;
       span.title{
         font-size: 16px;
-        font-weight: bold;
         width: 95%;
       }
       button {
@@ -97,39 +99,49 @@ PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA
       right: 10px;
       text-decoration: none;
     }
-  }
-
-  ul.child-list-group {//margin:2px 0 0 0;
-    >li:last-child{
-      border-bottom:none;
-    }
-    li {
-      a{
-        span.title{
-          font-size: 16px;
-          font-weight: normal;
-          color: #3e3e3e;
-          width: 94%;
+    ul.child-list-group {
+      >li:last-child{
+        border-bottom:none;
+      }
+      li {
+        border-bottom: 2px solid #fff;
+        a{
+          span.title{
+            font-size: 14px;
+            font-weight: normal;
+            color: #3e3e3e;
+            width: 94%;
+          }
+          &:hover {
+            color: #0d65a6;
+          }
         }
-        &:hover {
-          color: #0d65a6;
+        a.toc-child-content{
+          .span.title {
+            font-size: 14px;
+          }
+          &.selectedPage span.title {
+            font-weight: bold;
+          }
+          padding: 15px 24px 15px 54px;
+          background: #f9f9f9;
+          cursor: pointer;
+          &.third {
+            padding-left:70px;
+            border-bottom: 2px solid #fff;
+            border-top: 2px solid #fff;
+          }
+          &.fourth{
+            padding-left:85px;
+            border-bottom: 2px solid #fff;
+          }
+          &.fifth{
+            padding-left:100px;
+          }
         }
-      }
-      a.toc-child-content{
-        padding-left:40px;
-      }
-      a.toc-child-content.third{
-        padding-left:70px;
-      }
-      a.toc-child-content.fourth{
-        padding-left:85px;
-      }
-      a.toc-child-content.fifth{
-        padding-left:120px;
       }
     }
   }
-
   li{
     a{
       display: inline-block;

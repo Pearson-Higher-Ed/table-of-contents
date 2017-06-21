@@ -46,6 +46,8 @@ class ComponentOwner extends React.Component {
           locale={this.props.intl.locale}
           drawerCallbacks={this.props.data.drawerCallbacks}
           clickTocHandler={this.props.data.clickTocHandler}
+          isTocWrapperRequired={this.props.isTocWrapperRequired}
+          currentPageId={this.props.currentPageId}
         />
       </MuiThemeProvider>
     );
@@ -58,7 +60,13 @@ ComponentOwner.childContextTypes = {
 
 ComponentOwner.propTypes = {
   data: PropTypes.object.isRequired,
-  intl: PropTypes.object.isRequired
+  intl: PropTypes.object.isRequired,
+  isTocWrapperRequired: PropTypes.bool,
+  currentPageId: PropTypes.string
+};
+ComponentOwner.defaultProps = {
+  isTocWrapperRequired: true,
+  currentPageId: ''
 };
 
 export default injectIntl(ComponentOwner); // Inject this.props.intl into the component context
