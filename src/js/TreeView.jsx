@@ -38,8 +38,8 @@ export default class TreeView extends React.Component {
     const field = this.props.childField || 'childNodes';
     let reqChapterId = '';
     list.forEach((chapter) => {
-      const reqChapter = chapter[field].find(page => page.id === this.props.currentPageId);
-      if (reqChapter) {
+      const reqChapter = chapter[field] ? chapter[field].find(page => page.urn === this.props.currentPageId) : {};
+      if (reqChapter && Object.keys(reqChapter).length !== 0) {
         reqChapterId = chapter.urn;
       }
     });

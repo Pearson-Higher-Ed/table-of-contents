@@ -125,10 +125,15 @@ export default class TreeNode extends React.Component {
     return `${clsStr} ${(nodeLength > 0 && this.state.expanded) ? 'expanded' : 'collapsed'}`;
   }
 
-  getParentClass = (currentChapterId, nodeUrn, currentDepth) => {
+  getParentClass = (currentChapterId, nodeUrn, currentDepth, currentPageId) => {
     let classStr = 'list-group-item';
-    classStr = currentChapterId === nodeUrn ? `${classStr} selectedChapter` : classStr;
+    let ChapterId = currentChapterId;
+    if (currentPageId.toLowerCase() === 'glossary' || currentPageId.toLowerCase() === 'footnotes') {
+      ChapterId = currentPageId;
+    }
+    classStr = ChapterId === nodeUrn ? `${classStr} selectedChapter` : classStr;
     classStr = currentDepth > 1 ? `${classStr} toc-child` : `${classStr} toc-parent`;
+
     return classStr;
   }
 
@@ -234,7 +239,7 @@ export default class TreeNode extends React.Component {
     const classStr = this.props.separateToggleIcon ? 'content' :
     this.getClassName(nodes.length, this.props.currentPageId, this.props.node.urn);
     const parentClass = this.getParentClass(this.props.currentChapterId, this.props.node.urn,
-      this.props.currentDepth, this.state.expanded);
+      this.props.currentDepth, this.props.currentPageId);
     return (
       <li
         className={parentClass}
