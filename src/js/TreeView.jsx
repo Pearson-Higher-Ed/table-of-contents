@@ -77,7 +77,7 @@ TreeView.propTypes = {
     content: PropTypes.object.isRequired,
     showDuplicateTitle: PropTypes.bool.isRequired
   }).isRequired,
-  drawerCallbacks: PropTypes.object.isRequired,
+  drawerCallbacks: PropTypes.object,
   tocClick: PropTypes.func.isRequired,
   separateToggleIcon: PropTypes.bool,
   currentPageId: PropTypes.string
@@ -85,5 +85,6 @@ TreeView.propTypes = {
 
 TreeView.defaultProps = {
   separateToggleIcon: false,
-  currentPageId: ''
+  currentPageId: '',
+  drawerCallbacks: {}
 };

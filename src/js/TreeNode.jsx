@@ -144,8 +144,7 @@ export default class TreeNode extends React.Component {
     const lastParentContent = currentPTOC[currentPTOC.length - 1];
     if (this.state.nexttab === true) {
       this.setState({ nexttab: false });
-      this.props.drawerCallbacks.onActive('bookmarks');
-      this.props.drawerCallbacks.changeState(1);
+      this.drawerCallBackFns();
     }
     const className = 'toc-parent-content';
     if (event.target.className && new RegExp(`(^|\\s)${className}(\\s|$)`).test(event.target.className)) {
@@ -160,11 +159,17 @@ export default class TreeNode extends React.Component {
     }
     if (event.target.parentNode === lastElement) {
       if ((event.which === 40 || event.keyCode === 40)) {
-        this.props.drawerCallbacks.onActive('bookmarks');
-        this.props.drawerCallbacks.changeState(1);
+        this.drawerCallBackFns();
       }
     }
   };
+
+  drawerCallBackFns = () => {
+    if (this.props.drawerCallbacks.onActive && this.props.drawerCallbacks.changeState) {
+      this.props.drawerCallbacks.onActive('bookmarks');
+      this.props.drawerCallbacks.changeState(1);
+    }
+  }
 
   renderClickIcon(classStr) {
     const depth = this.props.depth;
@@ -310,5 +315,6 @@ TreeNode.propTypes = {
 };
 TreeNode.defaultProps = {
   currentPageId: '',
-  currentChapterId: ''
+  currentChapterId: '',
+  drawerCallbacks: {}
 };

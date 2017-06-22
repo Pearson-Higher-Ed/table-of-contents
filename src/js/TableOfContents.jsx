@@ -59,7 +59,7 @@ class TableOfContents extends React.PureComponent {
 }
 
 TableOfContents.propTypes = {
-  drawerCallbacks: PropTypes.object.isRequired,
+  drawerCallbacks: PropTypes.object,
   data: PropTypes.object.isRequired,
   childField: PropTypes.string.isRequired,
   depth: PropTypes.number.isRequired,
@@ -72,7 +72,8 @@ TableOfContents.propTypes = {
 
 TableOfContents.defaultProps = {
   isTocWrapperRequired: true,
-  currentPageId: ''
+  currentPageId: '',
+  drawerCallbacks: {}
 };
 
 export default injectIntl(TableOfContents);
