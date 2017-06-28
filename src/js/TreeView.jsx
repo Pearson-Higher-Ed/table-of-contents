@@ -75,7 +75,7 @@ TreeView.propTypes = {
   childField: PropTypes.string.isRequired,
   data: PropTypes.shape({
     content: PropTypes.object.isRequired,
-    showDuplicateTitle: PropTypes.bool.isRequired
+    showDuplicateTitle: PropTypes.bool
   }).isRequired,
   drawerCallbacks: PropTypes.object,
   tocClick: PropTypes.func.isRequired,

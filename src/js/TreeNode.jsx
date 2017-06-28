@@ -298,7 +298,7 @@ export default class TreeNode extends React.Component {
 TreeNode.propTypes = {
   data: PropTypes.shape({
     content: PropTypes.object.isRequired,
-    showDuplicateTitle: PropTypes.bool.isRequired
+    showDuplicateTitle: PropTypes.bool
   }),
   separateToggleIcon: PropTypes.bool,
   id: PropTypes.string.isRequired,
