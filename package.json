@@ -1,6 +1,6 @@
 {
   "name": "@pearson-incubator/toc",
-  "version": "0.1.49",
+  "version": "0.1.50",
   "description": "TOC Component to render the table of contents of a book",
   "main": "./main.js",
   "scripts": {
