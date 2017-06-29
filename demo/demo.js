@@ -48,8 +48,20 @@ function init() {
                     href: 'OPS/xhtml/file_0003_1-1-1-1.html',
                     title: 'great-great-grandchild-1',
                     urn: 'c-1-1-1-1'
+                  },
+                  {
+                    id: 'c-2-2-2-2',
+                    href: 'OPS/xhtml/file_0003_1-1-1-1.html',
+                    title: 'great-great-grandchild-2',
+                    urn: 'c-2-2-2-2'
                   }
                 ]
+              },
+              {
+                id: 'c-2-2-2',
+                href: 'OPS/xhtml/file_0003_1-1-1.html',
+                title: 'great-grandchild-2',
+                urn: 'c-2-2-2'
               }
             ]
           }

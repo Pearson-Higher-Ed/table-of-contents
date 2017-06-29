@@ -133,7 +133,6 @@ export default class TreeNode extends React.Component {
     }
     classStr = ChapterId === nodeUrn ? `${classStr} selectedChapter` : classStr;
     classStr = currentDepth > 1 ? `${classStr} toc-child` : `${classStr} toc-parent`;
-
     return classStr;
   }
 
