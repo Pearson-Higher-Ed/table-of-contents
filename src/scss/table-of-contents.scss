@@ -115,6 +115,9 @@ PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA
             color: #0d65a6;
           }
         }
+        &.toc-child-third {
+            border-bottom: none !important;
+        }
         a.toc-child-content{
           .span.title {
             font-size: 14px;
