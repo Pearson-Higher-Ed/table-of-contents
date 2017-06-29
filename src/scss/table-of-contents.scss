@@ -103,7 +103,6 @@ PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA
         border-bottom:none;
       }
       li {
-        border-bottom: 2px solid #fff;
         a{
           span.title{
             font-size: 14px;
@@ -114,9 +113,6 @@ PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA
           &:hover {
             color: #0d65a6;
           }
-        }
-        &.toc-child-third {
-            border-bottom: none !important;
         }
         a.toc-child-content{
           .span.title {
@@ -130,21 +126,13 @@ PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA
           }
           padding: 15px 24px 15px 54px;
           background: #f9f9f9;
+          border-top: 2px solid #fff;
           cursor: pointer;
           &.third {
             padding-left:70px;
-            border-bottom: 2px solid #fff;
-            border-top: 2px solid #fff;
-            &.collapsed {
-              border-bottom: none !important;
-            }
           }
           &.fourth{
             padding-left:85px;
-            border-bottom: 2px solid #fff;
-            &.collapsed {
-              border-bottom: none !important;
-            }
           }
           &.fifth{
             padding-left:100px;
