@@ -20,6 +20,7 @@ PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA
  */
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import IconButton from 'material-ui/IconButton';
 import SvgIcon from 'material-ui/SvgIcon';
@@ -170,21 +171,35 @@ export default class TreeNode extends React.Component {
     }
   }
 
+  handleKeyboardFocus = () => {
+    const { formatMessage } = this.props.intl;
+    const getStateIconBtn = (this.state.expanded) ? formatMessage(messages.collapse) : formatMessage(messages.expand);
+    const collapseExpandLabel = `Click Here to ${getStateIconBtn} chapter List`;
+    ReactDOM.findDOMNode(this.iconBtn).setAttribute('aria-label', collapseExpandLabel); // eslint-disable-line react/no-find-dom-node
+  }
+
+  handleIconBtnClick = () => {
+    const { formatMessage } = this.props.intl;
+    const getStateIconBtn = (this.state.expanded) ? formatMessage(messages.collapsedList) : formatMessage(messages.expandedList);
+    const collapseExpandLabel = `${getStateIconBtn} chapter List`;
+    ReactDOM.findDOMNode(this.iconBtn).setAttribute('aria-label', collapseExpandLabel); // eslint-disable-line react/no-find-dom-node
+  }
+
   renderClickIcon(classStr) {
     const depth = this.props.depth;
     const currDepth = this.props.currentDepth;
     const hasChildren = !!(this.props.childNodes.length);
-    const { formatMessage } = this.props.intl;
-
     /* Logic to display toggle icon for first level headings and then depending on depth, show/hide the icon*/
     if (currDepth === 1 || (currDepth !== 1 && currDepth < depth && hasChildren)) {
       return (<IconButton
         className={`icon ${classStr}`}
+        role="button"
         aria-controls={this.props.node.id}
         aria-expanded={this.state.expanded}
-        aria-label={this.state.expanded ? formatMessage(messages.expandedList) : formatMessage(messages.collapsedList)}
         iconStyle={btnStyle}
         style={iconButtonStyle}
+        onTouchTap={this.handleIconBtnClick}
+        ref={(iconBtn) => { this.iconBtn = iconBtn; }}
       >{this.state.expanded ? <CollapseBtn viewBox="368 33 16 9" /> : <ExpandBtn viewBox="0 0 13 9" />}</IconButton>);
     }
     return null;
@@ -256,8 +271,8 @@ export default class TreeNode extends React.Component {
       >
         <a
           className={classStr}
-          role="button"
           tabIndex="0"
+          role="link"
           aria-controls={this.props.node.urn}
           aria-expanded={this.state.expanded}
           onClick={(e) => {
@@ -267,6 +282,16 @@ export default class TreeNode extends React.Component {
               this.handleLinkClick(e);
             }
           }}
+          onKeyDown={(e) => {
+            if (e.which === 13 || e.keyCode === 13) {
+              if (nodes.length > 0) {
+                this.toggle(e);
+              } else {
+                this.handleLinkClick(e);
+              }
+            }
+          }}
+          onBlur={this.handleKeyboardFocus}
         >
           <span className="title">{this.props.node.title ? this.props.node.title : this.props.node.label}</span>
           {

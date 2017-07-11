@@ -1,4 +1,6 @@
 {
   "expandedList":"étendu",
-  "collapsedList":"s'est effondré"
+  "collapsedList":"s'est effondré",
+  "expand":"développer",
+  "collapse":"effondrer"
 }
