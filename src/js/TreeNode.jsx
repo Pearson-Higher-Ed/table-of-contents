@@ -20,7 +20,6 @@ PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import IconButton from 'material-ui/IconButton';
 import SvgIcon from 'material-ui/SvgIcon';
@@ -71,7 +70,8 @@ export default class TreeNode extends React.Component {
     this.state = {
       currentDepth: (this.props.currentDepth || 1),
       nexttab: false,
-      expanded: false
+      expanded: false,
+      iconBtnLabel: ''
     };
     this.handleLinkClick = this.handleLinkClick.bind(this, this.props.node.urn);
   }
@@ -175,14 +175,14 @@ export default class TreeNode extends React.Component {
     const { formatMessage } = this.props.intl;
     const getStateIconBtn = (this.state.expanded) ? formatMessage(messages.collapse) : formatMessage(messages.expand);
     const collapseExpandLabel = `Click Here to ${getStateIconBtn} chapter List`;
-    ReactDOM.findDOMNode(this.iconBtn).setAttribute('aria-label', collapseExpandLabel); // eslint-disable-line react/no-find-dom-node
+    this.setState({ iconBtnLabel: collapseExpandLabel });
   }
 
   handleIconBtnClick = () => {
     const { formatMessage } = this.props.intl;
     const getStateIconBtn = (this.state.expanded) ? formatMessage(messages.collapsedList) : formatMessage(messages.expandedList);
     const collapseExpandLabel = `${getStateIconBtn} chapter List`;
-    ReactDOM.findDOMNode(this.iconBtn).setAttribute('aria-label', collapseExpandLabel); // eslint-disable-line react/no-find-dom-node
+    this.setState({ iconBtnLabel: collapseExpandLabel });
   }
 
   renderClickIcon(classStr) {
@@ -196,6 +196,7 @@ export default class TreeNode extends React.Component {
         role="button"
         aria-controls={this.props.node.id}
         aria-expanded={this.state.expanded}
+        aria-label={this.state.iconBtnLabel}
         iconStyle={btnStyle}
         style={iconButtonStyle}
         onTouchTap={this.handleIconBtnClick}
