@@ -27,5 +27,15 @@ export const messages = defineMessages({
     id: 'collapsedList',
     description: 'this is the text for collapsedList',
     defaultMessage: 'collapsed'
+  },
+  expand: {
+    id: 'expand',
+    description: 'this is the text for expand',
+    defaultMessage: 'expand'
+  },
+  collapse: {
+    id: 'collapse',
+    description: 'this is the text for collapse',
+    defaultMessage: 'collapse'
   }
 });
