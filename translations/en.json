@@ -1,4 +1,6 @@
 {
   "expandedList":"expanded",
-  "collapsedList":"collapsed"
+  "collapsedList":"collapsed",
+  "expand":"expand",
+  "collapse":"collapse"
 }
