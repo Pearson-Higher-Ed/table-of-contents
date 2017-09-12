@@ -23,46 +23,53 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import IconButton from 'material-ui/IconButton';
 import SvgIcon from 'material-ui/SvgIcon';
+
+import NavigationExpandLess from 'material-ui/svg-icons/navigation/expand-less';
+import NavigationExpandMore from 'material-ui/svg-icons/navigation/expand-more';
 import { AnalyticsManager } from '@pearson-incubator/aquila-js-core';
 import { messages } from './defaultMessages';
 
-const ExpandBtn = props => (
-  <SvgIcon {...props}>
-    <path
-      d="M1158.33104,54.2836362 C1158.71313,53.9055017 1159.33176,53.9055017 1159.71386,54.2836362 C1160.0951,
-      54.6614882 1160.09566,55.2744731 1159.71386,55.6528903 L1154.1919,61.064623 C1153.80981,61.4427575 1153.19061,
-      61.4427575 1152.80852,61.064623 L1147.28657,55.6528903 C1146.90448,55.2744731 1146.90448,54.6620534 1147.28657,
-      54.2836362 C1147.66838,53.9055017 1148.2873,53.9055017 1148.66911,54.2833536 L1153.50007,58.7214888 L1158.33104,
-      54.2836362 Z"
-      fill="#252525"
-      transform="translate(-1147.000000, -54.000000)"
-    />
-  </SvgIcon>
-);
 
-const CollapseBtn = props => (
-  <SvgIcon {...props}>
-    <path
-      d="M2.60946667,7.99993333 L9.47146667,1.13793333 C9.73146667,0.877266667 9.73146667,0.455933333 9.47146667,
-      0.195266667 C9.21146667,-0.0654 8.7888,-0.0654 8.5288,0.195266667 L1.19546667,7.5286 C0.9348,7.78926667 0.9348,
-      8.2106 1.19546667,8.47126667 L8.5288,15.8046 C8.6588,15.9346 8.82946667,15.9999333 9.00013333,15.9999333 C9.1708,
-      15.9999333 9.34146667,15.9346 9.47146667,15.8046 C9.73146667,15.5439333 9.73146667,15.1226 9.47146667,
-      14.8619333 L2.60946667,7.99993333 Z"
-      fill="#252525"
-      transform="translate(376.000000, 36.833333) rotate(90.000000) translate(-376.000000, -36.833333)
-      translate(371.500000, 28.833333)"
-    />
-  </SvgIcon>
-);
-
-const btnStyle = {
-  width: '16px',
-  height: '9px'
-};
 const iconButtonStyle = {
-  paddingTop: '20px',
-  float: 'right'
+  float: 'right',
+  top: 22
 };
+
+const iconStyle = {
+  fill: '#6a7070'
+};
+
+const arrowStyle = {
+  float: 'right',
+  position: 'relative',
+  top: 32,
+  right: 18
+};
+const NextBtn = props => (
+  <SvgIcon {...props}>
+    <path
+      d="M1211.56028,31.7501875 L1214.03008,29.2804375 C1214.32334,28.9871875 1214.32334,
+      28.5131875 1214.03008,28.2199375 C1213.73682,27.9266875 1213.26281,27.9266875 1212.96956,
+      28.2199375 L1209.22023,31.9691875 C1209.18498,32.0044375 1209.15348,32.0434375 1209.12573,
+      32.0846875 C1209.11373,32.1019375 1209.10623,32.1214375 1209.09573,32.1401875 C1209.08223,
+      32.1641875 1209.06798,32.1874375 1209.05673,32.2136875 C1209.04698,32.2376875 1209.04098,
+      32.2631875 1209.03348,32.2879375 C1209.02748,32.3104375 1209.01923,32.3306875 1209.01473,
+      32.3531875 C1208.99522,32.4499375 1208.99522,32.5496875 1209.01473,32.6471875 C1209.01923,
+      32.6696875 1209.02748,32.6899375 1209.03348,32.7116875 C1209.04098,32.7371875 1209.04698,
+      32.7626875 1209.05673,32.7866875 C1209.06798,32.8129375 1209.08223,32.8361875 1209.09573,
+      32.8601875 C1209.10623,32.8789375 1209.11373,32.8984375 1209.12573,32.9156875 C1209.15348,
+      32.9569375 1209.18498,32.9959375 1209.22023,33.0311875 L1212.96956,36.7804375 C1213.11581,
+      36.9266875 1213.30781,37.0001875 1213.49982,37.0001875 C1213.69182,37.0001875 1213.88383,
+      36.9266875 1214.03008,36.7804375 C1214.32334,36.4871875 1214.32334,36.0131875 1214.03008,
+      35.7199375 L1211.56028,33.2501875 L1226.25008,33.2501875 C1226.66409,33.2501875 1227.0001,
+      32.9141875 1227.0001,32.5001875 C1227.0001,32.0861875 1226.66409,31.7501875 1226.25008,
+      31.7501875 L1211.56028,31.7501875 Z"
+      fill="#6a7070"
+      transform="translate(1218.000100, 32.500094) rotate(180.000000) translate(-1218.000100, -32.500094)"
+    />
+  </SvgIcon>
+);
+
 
 export default class TreeNode extends React.Component {
   constructor(props) {
@@ -184,7 +191,6 @@ export default class TreeNode extends React.Component {
     const collapseExpandLabel = `${getStateIconBtn} chapter List`;
     this.setState({ iconBtnLabel: collapseExpandLabel });
   }
-
   renderClickIcon(classStr) {
     const depth = this.props.depth;
     const currDepth = this.props.currentDepth;
@@ -198,10 +204,10 @@ export default class TreeNode extends React.Component {
         aria-controls={this.props.node.id}
         aria-label={this.state.iconBtnLabel}
         aria-expanded={this.state.expanded}
-        iconStyle={btnStyle}
         style={iconButtonStyle}
+        iconStyle={iconStyle}
         onTouchTap={this.handleIconBtnClick}
-      >{this.state.expanded ? <CollapseBtn viewBox="368 33 16 9" /> : <ExpandBtn viewBox="0 0 13 9" />}</IconButton>);
+      >{this.state.expanded ? <NavigationExpandLess /> : <NavigationExpandMore />}</IconButton>);
     }
     return null;
   }
@@ -298,7 +304,11 @@ export default class TreeNode extends React.Component {
           {
             this.props.node[childField] &&
             this.props.node[childField].length > 0 ?
-              this.renderClickIcon(this.props.id, classStr) : ''
+              this.renderClickIcon(this.props.id, classStr) : <NextBtn
+                className="arrowForward"
+                viewBox="1209 28 18 9"
+                style={arrowStyle}
+              />
           }
         </a>
 
