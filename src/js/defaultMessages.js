@@ -1,4 +1,4 @@
-/**
+/* *
 PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA
  *  Copyright © 2017 Pearson Education, Inc.
  *  All Rights Reserved.
@@ -10,7 +10,7 @@ PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA
  * Dissemination of this information, reproduction of this material, and copying or distribution of this software
  * is strictly forbidden unless prior written permission is obtained
  * from Pearson Education, Inc.
-**/
+* */
 
 import { defineMessages } from 'react-intl';
 

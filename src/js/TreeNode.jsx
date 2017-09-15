@@ -1,4 +1,4 @@
-/**
+/* *
 PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA
  *  Copyright © 2017 Pearson Education, Inc.
  *  All Rights Reserved.
@@ -10,9 +10,9 @@ PEARSON PROPRIETARY AND CONFIDENTIAL INFORMATION SUBJECT TO NDA
  * Dissemination of this information, reproduction of this material, and copying or distribution of this software
  * is strictly forbidden unless prior written permission is obtained
  * from Pearson Education, Inc.
-**/
+* */
 
-/**
+/* *
  * Tree View implementation. Currently called from a Table Of Contents component for that specific purpose.
  * Can be optimized to display as two different components.
  * @type {boolean} showDuplicateTitle - optional param to repeat the chapter title in display.
@@ -187,7 +187,9 @@ export default class TreeNode extends React.Component {
 
   handleIconBtnClick = () => {
     const { formatMessage } = this.props.intl;
-    const getStateIconBtn = (this.state.expanded) ? formatMessage(messages.collapsedList) : formatMessage(messages.expandedList);
+    const getStateIconBtn = (this.state.expanded) ?
+      formatMessage(messages.collapsedList) :
+      formatMessage(messages.expandedList);
     const collapseExpandLabel = `${getStateIconBtn} chapter List`;
     this.setState({ iconBtnLabel: collapseExpandLabel });
   }
@@ -196,7 +198,7 @@ export default class TreeNode extends React.Component {
     const currDepth = this.props.currentDepth;
     const hasChildren = !!(this.props.childNodes.length);
 
-    /* Logic to display toggle icon for first level headings and then depending on depth, show/hide the icon*/
+    // Logic to display toggle icon for first level headings and then depending on depth, show/hide the icon
     if (currDepth === 1 || (currDepth !== 1 && currDepth < depth && hasChildren)) {
       return (<IconButton
         className={`icon ${classStr}`}
