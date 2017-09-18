@@ -26,8 +26,7 @@
     "url": "https://github.com/Pearson-Higher-Ed/"
   },
   "dependencies": {
-    "@pearson-incubator/aquila-js-core": "^0.2.34",
-    "react-intl": "^2.3.0"
+    "@pearson-incubator/aquila-js-core": "^0.2.34"
   },
   "devDependencies": {
     "babel-core": "~6.3.17",
@@ -61,6 +60,7 @@
     "react": "^15.4.0",
     "react-addons-test-utils": "^15.4.0",
     "react-dom": "^15.4.0",
+    "react-intl": "^2.3.0",
     "react-tap-event-plugin": "^2.0.1",
     "sass-loader": "^4.1.1",
     "semver": "~5.1.0",
@@ -72,6 +72,7 @@
   "peerDependencies": {
     "react": "^15.4.0",
     "react-dom": "^15.4.0",
+    "react-intl": "^2.3.0",
     "prop-types": "^15.5.10",
     "material-ui": "^0.16.3",
     "react-tap-event-plugin": "^2.0.1"
