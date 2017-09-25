@@ -285,6 +285,7 @@ export default class TreeNode extends React.Component {
           aria-controls={this.props.node.urn}
           aria-expanded={this.state.expanded}
           onClick={(e) => {
+            e.target.parentNode.blur();
             if (nodes.length > 0) {
               this.toggle(e);
             } else {
